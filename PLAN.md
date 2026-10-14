@@ -35,7 +35,7 @@ The owner ended this implementation session. There is **no active implementation
 - X update: `4e713fe` — Add X profile to portfolio contact channels; `b5785f3` — Record owner-confirmed X profile link.
 - Application tip at handoff: **`b5785f3`**, confirmed equal to remote `main`.
 - Vercel reported **Deployment has completed** for that tip. Live homepage: `https://niadul.vercel.app/`; a read-only check returned HTTP 200 and found the two rendered X links.
-- The application working tree was clean before the owner requested this final documentation update. The handoff-document edits are local until separately authorized for commit/push. Inspect `git status`; do not discard them or assume they are already remote.
+- The application working tree was clean before the owner requested this final documentation update. The owner then authorized six one-file documentation commits and a push. Inspect `git status` and `git log`; do not assume local changes are already remote.
 - Owner preference persists: **one file per commit**, including additions/deletions; meaningful messages; no `Co-Authored-By` trailer. Commit and push each require explicit authorization for the new work. Earlier approvals applied to the completed batches.
 - Authorized pushes use `git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin main`. Do not alter global Git configuration or force-push.
 
