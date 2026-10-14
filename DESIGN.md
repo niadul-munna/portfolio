@@ -1,0 +1,85 @@
+# Design notes
+
+A short record of the decisions behind this site, so changes can be made in the same spirit.
+
+## Brief
+
+A personal site for Niadul Islam, frontend developer at Tenbyte Cloud. The reader is a hiring manager or senior engineer with five minutes. They should leave knowing three things: what he works on, how deep the work goes, and that the claims are honest.
+
+The direction is a working document, not a landing page. Swiss editorial structure, the restraint of a well-set independent publication, and the plain annotation style of engineering documentation. Nothing on the page exists only to decorate it.
+
+## Principles
+
+1. **Type does the work.** Hierarchy comes from size, weight, and position, not boxes, icons, or colour.
+2. **Structure is visible.** A 12-column grid with a narrow label column on the left. Hairlines separate; panels are rare.
+3. **Every claim is checkable.** Each piece of work carries a status: shipped, in review, prototype, concept, or personal. Missing facts render as a marked placeholder; they are never filled with guesses.
+4. **Motion is feedback.** Transitions run 150–250 ms and only respond to the reader. No entrance animations, no scroll effects.
+5. **The page works without JavaScript.** The signature interaction is pure CSS. The theme toggle is the one piece of client code, and without JavaScript the site still follows the system theme.
+
+## Tokens
+
+Defined as CSS variables in `app/globals.css` and exposed to Tailwind through `@theme inline`.
+
+| Token         | Light     | Dark      | Use                                                             |
+| ------------- | --------- | --------- | --------------------------------------------------------------- |
+| `--canvas`    | `#F7F7F4` | `#151614` | Page background                                                 |
+| `--panel`     | `#EFEFEA` | `#1C1E1B` | Rare soft panels (project plates)                               |
+| `--ink`       | `#20221F` | `#E8E9E3` | Primary text                                                    |
+| `--ink-soft`  | `#3A3D38` | `#C9CCC4` | Long-form body text                                             |
+| `--muted`     | `#666A63` | `#9A9E96` | Secondary text and metadata                                     |
+| `--line`      | `#DADDD5` | `#2C2F2A` | Hairlines                                                       |
+| `--line-strong` | `#BFC3B9` | `#41453F` | Hover underlines, schematic strokes                           |
+| `--accent`    | `#4A6151` | `#8FAE98` | Links on hover, focus, the "shipped" marker, schematic emphasis |
+
+Contrast against the canvas, measured with WCAG 2 relative luminance: ink 14.9:1, ink-soft 10.3:1, muted 5.1:1 (4.8:1 on panel), accent 6.3:1. The brief's suggested muted value (`#777B74`) measured 4.0:1, below AA for body-size text, so it was darkened. The accent was also nudged slightly darker for the same reason. Dark tokens: ink 14.9:1, muted 6.7:1, accent 7.5:1.
+
+## Type
+
+| Role      | Face           | Size                                | Notes                                     |
+| --------- | -------------- | ----------------------------------- | ----------------------------------------- |
+| Display   | Geist 470      | `clamp(2.25rem, 1.3rem + 3.9vw, 4.5rem)` / 1.04 | Hero statement only. Tracking −0.035em |
+| Title     | Geist 470      | `clamp(1.75rem, 1.25rem + 1.9vw, 2.75rem)` / 1.08 | Work index rows, case study title |
+| Heading   | Geist 500      | 1.375rem / 1.25                     | Case study section headings              |
+| Standfirst| Newsreader 400 | `clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem)` / 1.45 | Intro paragraphs and the About section |
+| Body      | Geist 400      | 1.0625rem / 1.65                    | Prose, max 66ch                           |
+| UI        | Geist 450      | 0.9375rem / 1.5                     | Navigation, row summaries                 |
+| Meta      | JetBrains Mono 400 | 0.75rem / 1.5                   | Numbers, dates, status, captions. Sentence case, no tracking |
+
+Newsreader is used only where a person is speaking at length. It never appears in headings. Mono is for metadata only, never for running text.
+
+## Grid and rhythm
+
+- Page container: max 1440px, side gutters 20 / 32 / 48 / 64px at base / sm / lg / xl.
+- 12 columns from `lg` (1024px), 8 from `md`, 4 below. Gap 24px, 32px from `xl`.
+- Section pattern: label in columns 1–3, content in 4–12. Below `lg` the label stacks on top.
+- Vertical spacing is in steps of 8px. Each section opens with 80px (128px from `lg`) of space, then a hairline, then its label.
+- Prose measure: 62–66ch.
+
+## Signature interaction: the work index
+
+The selected-work list is an index. Each row shows a number, a title, its category and dates, and a one-line summary. On desktop with a fine pointer, hovering or focusing a row:
+
+- dims the other titles to muted colour (200 ms), and
+- reveals that project's plate in the right-hand columns, clipping open from top to bottom (240 ms, `cubic-bezier(.2,.7,.2,1)`).
+
+The first project's plate is the resting state. The behaviour comes entirely from CSS (`:hover`, `:focus-within`, `:has()`), with no client JavaScript. On touch devices and below 1024px, each plate renders in flow with its row as a static thumbnail. Under `prefers-reduced-motion` the plates swap without transitions.
+
+## Plates and schematics
+
+There are no cleared product screenshots yet, and the brief rules out mock dashboards posing as real ones. Each project therefore gets a **schematic**: a hairline line drawing of the shape of the work (a library grid, a UTC-bucketed chart, a cache path), annotated in mono like an engineering figure. Each is labelled as a schematic in its caption. When a screenshot is cleared, add it to the project's `media` and the plate renders it with `next/image`.
+
+## Theme
+
+Light is the default design. Dark follows the system setting until the reader chooses otherwise with the toggle at the end of the navigation: a half-filled circle, 32px hit area, labelled "Dark theme" with `aria-pressed`. One click flips the theme on screen. Choosing the theme the system already uses clears the saved choice, so the site follows the system again without a separate "System" option. The choice is stored in `localStorage`, applied by an inline script in `<head>` before first paint, and kept in sync across open tabs. The dark tokens live twice in `globals.css`, under the media query and under `[data-theme="dark"]`, and must stay identical.
+
+The toggle is the only client component the site ships.
+
+## Photo and portrait
+
+The hero has your GitHub photo in the left label column, top-aligned with the intro paragraph: 192px on desktop, 144–160px beside the intro on tablets, 112px above it on phones. It loads eagerly but isn't preloaded, because the headline, not the photo, is the largest element on screen.
+
+The About section has an illustrated portrait in the left-hand label column (columns 1–3), top-aligned with the first paragraph like an author photo in a magazine. It's the only colour-saturated element on the page, so it stays small: three columns wide on desktop, and at most 15rem on phones, where it sits above the text. It is served through `next/image` as AVIF/WebP.
+
+## What the design avoids
+
+Gradients, glass, glow, blobs, grain, 3D, icon-and-title card grids, pill clouds of skills, progress bars, counters, typing effects, carousels, sticky headers, giant-name hero, uppercase tracked micro-labels. The only icons are typographic arrows.

@@ -1,0 +1,391 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ tokens */
+
+:root {
+  --canvas: #f7f7f4;
+  --panel: #efefea;
+  --ink: #20221f;
+  --ink-soft: #3a3d38;
+  --muted: #666a63;
+  --line: #daddd5;
+  --line-strong: #bfc3b9;
+  --accent: #4a6151;
+  --accent-wash: #e3e9e2;
+  --selection: #d6e0d7;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --gap: 1.5rem;
+
+  color-scheme: light;
+}
+
+/*
+ * Dark tokens apply when the system prefers dark and the reader hasn't chosen
+ * light, or when the reader has chosen dark. `data-theme` is set before first
+ * paint by the inline script in app/layout.tsx; see components/theme-toggle.tsx.
+ * The two blocks must stay identical.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #151614;
+    --panel: #1c1e1b;
+    --ink: #e8e9e3;
+    --ink-soft: #c9ccc4;
+    --muted: #9a9e96;
+    --line: #2c2f2a;
+    --line-strong: #41453f;
+    --accent: #8fae98;
+    --accent-wash: #1f2a22;
+    --selection: #2c3b30;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #151614;
+  --panel: #1c1e1b;
+  --ink: #e8e9e3;
+  --ink-soft: #c9ccc4;
+  --muted: #9a9e96;
+  --line: #2c2f2a;
+  --line-strong: #41453f;
+  --accent: #8fae98;
+  --accent-wash: #1f2a22;
+  --selection: #2c3b30;
+
+  color-scheme: dark;
+}
+
+@media (min-width: 80rem) {
+  :root {
+    --gap: 2rem;
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-wash: var(--accent-wash);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --spacing-gap: var(--gap);
+  --ease-out: var(--ease-out);
+}
+
+@theme {
+  --text-display: clamp(2.25rem, 1.3rem + 3.9vw, 4.5rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 470;
+
+  --text-title: clamp(1.75rem, 1.25rem + 1.9vw, 2.75rem);
+  --text-title--line-height: 1.08;
+  --text-title--letter-spacing: -0.028em;
+  --text-title--font-weight: 470;
+
+  --text-heading: 1.375rem;
+  --text-heading--line-height: 1.25;
+  --text-heading--letter-spacing: -0.015em;
+  --text-heading--font-weight: 500;
+
+  --text-standfirst: clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem);
+  --text-standfirst--line-height: 1.45;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1.5;
+
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.5;
+
+  --breakpoint-3xl: 112rem;
+}
+
+/* -------------------------------------------------------------------- base */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-ui);
+    line-height: var(--text-ui--line-height);
+    font-weight: 420;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd,
+  figcaption {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--selection);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    background-color: var(--panel);
+    color: var(--ink);
+  }
+}
+
+/* --------------------------------------------------------------- utilities */
+
+/* Inline link: hairline underline that strengthens on hover. */
+@utility link {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: var(--line-strong);
+  transition:
+    text-decoration-color 180ms var(--ease-out),
+    color 180ms var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--accent);
+      text-decoration-color: currentColor;
+    }
+  }
+}
+
+/* Twelve-column page grid with an 8- and 4-column collapse. */
+@utility page-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gap);
+
+  @media (min-width: 48rem) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  @media (min-width: 64rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* ------------------------------------------------- work index (signature) */
+
+/*
+ * Every row carries its own plate. Below 1024px, or without a fine pointer,
+ * plates sit in flow as static thumbnails. With a fine pointer on a wide
+ * screen, plates stack in the right-hand four columns and the hovered or
+ * focused row's plate clips open; the first project is the resting state.
+ * No JavaScript is involved.
+ */
+
+.work-title {
+  transition: color 200ms var(--ease-out);
+}
+
+.work-arrow {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-0.25em);
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 200ms var(--ease-out);
+}
+
+.work-link:is(:hover, :focus-visible) .work-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.work-link:focus-visible {
+  outline-offset: 6px;
+}
+
+@media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
+  .work-index {
+    --plate-width: calc((100% - 11 * var(--gap)) / 3 + 3 * var(--gap));
+    position: relative;
+    min-height: calc(var(--plate-width) * 0.75 + 3.5rem);
+  }
+
+  .work-list {
+    grid-column: span 8 / span 8;
+  }
+
+  .work-link {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .work-text {
+    grid-column: span 5 / span 5;
+  }
+
+  .work-plate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--plate-width);
+    margin: 0;
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    pointer-events: none;
+    transition:
+      opacity 200ms var(--ease-out),
+      clip-path 240ms var(--ease-out);
+  }
+
+  .work-row:is(:hover, :focus-within) .work-plate,
+  .work-index:not(:has(.work-row:is(:hover, :focus-within)))
+    .work-row:first-child
+    .work-plate {
+    opacity: 1;
+    clip-path: inset(0);
+    z-index: 1;
+  }
+
+  .work-index:has(.work-row:is(:hover, :focus-within))
+    .work-row:not(:hover, :focus-within)
+    .work-title {
+    color: var(--muted);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* -------------------------------------------------------------- schematics */
+
+.schematic {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+}
+
+.schematic .s-window {
+  fill: var(--canvas);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic .s-frame,
+.schematic .s-line {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic .s-ink {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic .s-soft {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic .s-dash {
+  stroke-dasharray: 3 3;
+}
+
+.schematic .s-accent {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic .s-wash {
+  fill: var(--accent-wash);
+}
+
+.schematic .s-fill {
+  fill: var(--canvas);
+}
+
+.schematic .s-dot {
+  fill: var(--accent);
+}
+
+.schematic text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--muted);
+}
+
+.schematic .s-label-ink {
+  fill: var(--ink);
+}
+
+.schematic .s-label-accent {
+  fill: var(--accent);
+}
+
+.schematic .s-callout circle {
+  fill: var(--canvas);
+  stroke: var(--ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.schematic .s-callout text {
+  font-size: 10px;
+  fill: var(--ink);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
