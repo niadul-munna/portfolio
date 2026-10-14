@@ -117,4 +117,4 @@ tests/                    Playwright tests
 ## Notes on choices
 
 - **Cache Components are off.** Next 16 enables them in new apps. All content here is known at build time, and classic static generation with `dynamicParams = false` returns a real 404 for unknown slugs, which Cache Components does not support.
-- **Dependencies:** `next`, `react`, `react-dom`, and `geist` (the font, plus TTFs for Open Graph images). Newsreader and JetBrains Mono come through `next/font/google` and are self-hosted at build time. There is no icon library; the arrows are typographic.
+- **Dependencies:** `next`, `react`, `react-dom`, `geist` (the font, plus TTFs for Open Graph images), and `@vercel/speed-insights` (real-visitor Core Web Vitals on Vercel; enable it under Project → Speed Insights). Newsreader and JetBrains Mono come through `next/font/google` and are self-hosted at build time. There is no icon library; the arrows are typographic.

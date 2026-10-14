@@ -6,12 +6,25 @@ const draftSlugs = projects.filter((p) => p.visibility === "draft").map((p) => p
 const pages = ["/", ...publicSlugs.map((slug) => `/work/${slug}`)];
 const widths = [320, 375, 768, 1440, 1920];
 
+/**
+ * Console errors and failed requests. Failed requests are tracked by URL, so
+ * the browser's generic "Failed to load resource" message is skipped. Vercel's
+ * own endpoints (/_vercel/*, e.g. Speed Insights) only exist on Vercel and 404
+ * under `next start`, so they are ignored.
+ */
 async function trackConsoleErrors(page: Page) {
   const errors: string[] = [];
   page.on("console", (message) => {
-    if (message.type() === "error") errors.push(message.text());
+    if (message.type() !== "error") return;
+    if (message.text().startsWith("Failed to load resource")) return;
+    errors.push(message.text());
   });
   page.on("pageerror", (error) => errors.push(error.message));
+  page.on("response", (response) => {
+    if (response.status() < 400) return;
+    if (new URL(response.url()).pathname.startsWith("/_vercel/")) return;
+    errors.push(`${response.status()} ${response.url()}`);
+  });
   return errors;
 }
 

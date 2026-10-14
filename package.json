@@ -13,6 +13,7 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {
+    "@vercel/speed-insights": "2.0.0",
     "geist": "1.7.2",
     "next": "16.4.0",
     "react": "19.3.0",
