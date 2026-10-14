@@ -18,40 +18,42 @@ export function Hero() {
         <div className="page-grid gap-y-8">
           <h1
             id="intro-title"
-            className="col-span-full max-w-[22ch] text-display text-ink [text-wrap:pretty] lg:col-span-11"
+            className="col-span-full max-w-[22ch] text-display text-ink lg:col-span-11"
           >
             <span className="sr-only">
               {profile.name}, {profile.role.toLowerCase()}.{" "}
             </span>
             {profile.statement}
           </h1>
-          <figure className="col-span-full md:col-span-2 lg:col-span-3">
-            <Image
-              src={avatar}
-              alt={profile.photo.alt}
-              sizes="(min-width: 1024px) 192px, (min-width: 768px) 160px, 112px"
-              loading="eager"
-              className="size-28 rounded-[3px] border border-line bg-panel object-cover md:size-40 lg:size-48"
-            />
-          </figure>
-          <div className="col-span-full md:col-span-6 lg:col-span-6">
-            <p className="max-w-[60ch] text-body text-ink-soft">{profile.intro}</p>
-            <p className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-ui">
-              <Link href="#work" className="link font-medium text-ink">
-                See selected work <span aria-hidden="true">↓</span>
-              </Link>
-              <Link href="#contact" className="link text-ink">
-                Get in touch <span aria-hidden="true">→</span>
-              </Link>
-              <a href={profile.cv} className="link text-ink" type="application/pdf" target="_blank">
-                CV <span className="font-mono text-meta text-muted">PDF</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </p>
+          <div className="col-span-full grid gap-y-8 md:grid-cols-[auto_minmax(0,1fr)] md:gap-x-6 lg:gap-x-8">
+            <figure className="w-fit">
+              <Image
+                src={avatar}
+                alt={profile.photo.alt}
+                sizes="(min-width: 1024px) 192px, (min-width: 768px) 160px, 112px"
+                loading="eager"
+                className="size-28 rounded-[3px] border border-line bg-panel object-cover md:size-40 lg:size-48"
+              />
+            </figure>
+            <div className="max-w-[40rem]">
+              <p className="max-w-[60ch] text-body text-ink-soft">{profile.intro}</p>
+              <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-ui sm:gap-x-8">
+                <Link href="#work" className="link inline-flex min-h-11 items-center gap-1 font-medium text-ink">
+                  See selected work <span aria-hidden="true">↓</span>
+                </Link>
+                <Link href="#contact" className="link inline-flex min-h-11 items-center gap-1 text-ink">
+                  Get in touch <span aria-hidden="true">→</span>
+                </Link>
+                <a href={profile.cv} className="link inline-flex min-h-11 min-w-11 items-center gap-1 text-ink" type="application/pdf" target="_blank" rel="noopener">
+                  CV <span className="font-mono text-meta text-muted">PDF</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </p>
+            </div>
           </div>
         </div>
 
-        <dl className="page-grid mt-16 gap-y-5 border-t border-line pt-5 lg:mt-24">
+        <dl className="page-grid mt-12 gap-y-5 border-t border-line pt-5 lg:mt-16">
           {facts.map((fact) => (
             <div key={fact.term} className="col-span-2 md:col-span-4 lg:col-span-3">
               <dt className="font-mono text-meta text-muted">{fact.term}</dt>
