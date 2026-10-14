@@ -6,6 +6,8 @@ Personal portfolio for **Niadul Islam** (full name on CV: Niadul Islam Munna), F
 
 Read before changing anything: `DESIGN.md` (design system and its reasons), `README.md` (scripts, deploy, testing), `CONTENT-TODO.md` (open facts and decisions).
 
+**Current work: see `PLAN.md`** (engineering notes and About illustration removal are implemented). The subsequent UI/UX audit and restrained refinements are recorded in `UI-AUDIT.md`.
+
 ## Stack
 
 - Next.js 16.4 App Router, React 19, TypeScript strict (`noUncheckedIndexedAccess` on), Tailwind CSS v4 (CSS-first, `@theme` in `app/globals.css`), pnpm 11.
@@ -28,12 +30,12 @@ pnpm check:content     # lists pending facts; exits 1 if any are in public conte
 ## Layout
 
 ```
-app/                    routes: page.tsx (home), work/[slug] (case studies), OG images, sitemap, robots, not-found
+app/                    routes: page.tsx (home), work/[slug] (case studies), notes/[slug], OG images, sitemap, robots, not-found
 components/             presentation only; components/home/* are the homepage sections
 content/                ALL copy and data, typed (types.ts). Edit content here, never in components
 lib/site.ts             visibility filtering, siteUrl, project lookups
 lib/og.tsx              Open Graph frame (Satori)
-assets/                 avatar.jpg (hero photo), portrait.jpg (About illustration)
+assets/                 avatar.jpg (hero photo)
 public/                 niadul-islam-munna-cv.pdf (replace the file to update the CV; keep the name)
 scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 ```
@@ -42,7 +44,7 @@ scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 
 - **Never invent facts**: no metrics, outcomes, clients, dates, URLs, testimonials or years of experience. Copy came from the repos' commit history. Unconfirmed facts use `pending("...")` from `content/types.ts`, which renders a dashed marker. A test fails if `pending` appears in public content.
 - Every claim carries a `WorkStatus`: `shipped | in-review | in-progress | prototype | concept | personal`. Unmerged work is "in-review", not "shipped".
-- `visibility: "draft"` hides an item from production builds, static params and the sitemap (it shows in `pnpm dev`). Everything is public right now.
+- `visibility: "draft"` hides an item from production builds, static params and the sitemap (it shows in `pnpm dev`). Projects and practice entries are public; the two engineering notes are drafts awaiting text approval.
 - Tone: a thoughtful engineer in his own voice. Banned clichés are enforced by `tests/content.spec.ts`: passionate, seamless, pixel-perfect, cutting-edge, leverage, and others.
 - Don't publish internal hostnames, endpoints, env values, customer names or vendor contracts. Cloudflare and R2 may be named.
 - Contact: niadulislammunna@gmail.com, github.com/niadul-munna, linkedin.com/in/niadul-munna.
@@ -79,5 +81,5 @@ The owner sometimes writes in Banglish. Reply in Banglish then, in Latin script 
 
 ## Open items (see CONTENT-TODO.md)
 
-- Promotion month in 2026 is unknown, so the site says "2026".
+- LinkedIn says Tenbyte started **Jun 2025**; the CV, brief and first commit (2025-07-21) say **Jul 2025**. The site uses Jul 2025 until the owner confirms.
 - Optional: a custom domain, real product screenshots (only with permission), and refining Sellorio's attribution (the product doc says Tenbyte owns it; the legal pages name ViteLoop).
