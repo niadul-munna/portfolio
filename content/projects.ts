@@ -87,6 +87,11 @@ export const projects: Project[] = [
           body: "Panels to generate, poll and edit AI subtitles and chapters, plus a raw WebVTT editor with validation. They were built against the Vidinfra AI service and are waiting on review.",
           status: "in-review",
         },
+        {
+          title: "Subtitle and chapter processing service",
+          body: "A Go service that transcribes video into WebVTT subtitles and AI-generated chapters. Results go back to the main API through retried background jobs, so a failed delivery isn’t lost. The output format is versioned, so a format change can’t silently corrupt saved chapters.",
+          status: "prototype",
+        },
       ],
       decisions: [
         {
@@ -427,6 +432,11 @@ export const projects: Project[] = [
         {
           title: "Marketing site",
           body: "Moved the static marketing site to TanStack Start without changing its output. Script hashes computed at build time keep a strict Content Security Policy. Screenshot baselines taken from the old site catch regressions.",
+          status: "shipped",
+        },
+        {
+          title: "Promo videos as code",
+          body: "Sellorio’s promo videos, including a Bangla commercial, built in Remotion. The script generates the voiceover with word timings and fits the music and effects to it. A final check validates dimensions, codecs and loudness.",
           status: "shipped",
         },
       ],
