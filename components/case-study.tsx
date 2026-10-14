@@ -17,7 +17,7 @@ export function CaseSection({
 }) {
   return (
     <section aria-labelledby={id} className="page-grid gap-y-5 border-t border-line pt-6 pb-14 lg:pb-20">
-      <h2 id={id} className="col-span-full text-ui font-medium text-ink lg:col-span-3">
+      <h2 id={id} tabIndex={-1} className="col-span-full scroll-mt-6 text-ui font-medium text-ink lg:col-span-3">
         {title}
       </h2>
       <div className="col-span-full md:col-span-7 lg:col-span-7">{children}</div>
