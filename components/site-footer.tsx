@@ -31,7 +31,7 @@ export function SiteFooter() {
                   <li key={channel.label}>
                     <a
                       href={channel.href}
-                      className="link -my-2 inline-block py-2 text-ink"
+                      className="link inline-flex min-h-11 min-w-11 items-center text-ink"
                       {...(channel.external ? { target: "_blank", rel: channel.rel } : {})}
                     >
                       {channel.label}
@@ -41,7 +41,6 @@ export function SiteFooter() {
                 ))}
               </ul>
             ) : null}
-            <p className="mt-3">Set in Geist, Newsreader and JetBrains Mono. Built with Next.js.</p>
           </div>
           <p className="col-span-full lg:col-span-3 lg:text-right">Updated {lastUpdated}</p>
         </div>
