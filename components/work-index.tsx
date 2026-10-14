@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/content/types";
 import { Plate } from "./plate";
+import { StatusTag } from "./status-tag";
 
 /**
  * The selected-work index. See DESIGN.md: rows are plain links; on wide
@@ -24,6 +25,7 @@ export function WorkIndex({ projects }: { projects: Project[] }) {
                   <span className="text-ink tabular-nums">{number}</span>
                   <span>{project.category}</span>
                   <span>{project.period}</span>
+                  <StatusTag status={project.status} />
                   {project.visibility === "draft" ? (
                     <span className="rounded-[3px] border border-dashed border-line-strong px-1.5 text-muted">
                       Draft, not published
