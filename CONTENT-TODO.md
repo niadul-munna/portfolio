@@ -19,8 +19,10 @@ How the copy was sourced: commit history and code in the project repositories (`
 ## 2. Facts to confirm
 
 ### Profile and experience
-- [ ] Month of the promotion to Frontend Developer in 2026. The site and the CV both say "2026".
-- [x] Earlier roles or education: the CV lists none, so the timeline has only Tenbyte Cloud.
+- [x] Promotion to Frontend Developer: May 2026 (from LinkedIn). Previous role added: Frontend Developer at Nexail Ltd, Dec 2024 – Jul 2025, full-time and remote.
+- [ ] Tenbyte start month: LinkedIn says Jun 2025; the site, CV and first commit say Jul 2025.
+- [x] Earlier experience: Nexail Ltd is included in the timeline based on LinkedIn. The CV lists no earlier roles or education.
+- [x] Nexail responsibilities: built the company website and made it responsive, confirmed by the owner on 2026-10-14. Added to the experience summary.
 - [x] "Open to frontend and product engineering roles" comes from the CV and is now in the Contact section.
 - [x] "Niadul Islam Munna", the full name on the CV, is in the structured data as `alternateName`.
 - [ ] "Tenbyte Cloud" as the employer name, with `tenbyte.io` as its site. Used in the structured data.
@@ -28,7 +30,7 @@ How the copy was sourced: commit history and code in the project repositories (`
 
 ### Vidinfra (`/work/vidinfra`)
 - [ ] Which features are **live in production**, as opposed to only merged to `dev`. The site marks search/filter/sort, scroll restoration, token refresh, the TanStack Start migration and stale-deploy recovery as shipped.
-- [ ] AI subtitles/chapters, cross-tab draft editing, localisation and dark mode were on unmerged branches at the time of writing. Only the AI panels are mentioned, marked "In review". Update the status if they have shipped.
+- [ ] AI subtitles/chapters, cross-tab draft editing, localisation and dark mode were on unmerged branches at the time of writing. The AI panels are marked "In review"; their separate processing service is marked "Prototype" and described in the case study as well as Beyond the interface. Update these statuses if they have shipped.
 - [ ] Decision D3 ("Render the console on the client"): the reasoning is a reasonable reading of the code, not something written down. Confirm or correct it.
 - [ ] Optional: a public product URL, and any reliability or usage numbers you are allowed to share. None are claimed, and nothing is shown until you add them.
 
@@ -60,12 +62,12 @@ The draft mechanism stays available. `visibility: "draft"` keeps any item out of
 ## 4. Assets
 
 - [ ] **Screenshots.** None are used. Every project shows a labelled schematic instead. If screenshots are cleared, put them in `public/work/<slug>/` and add them to the project's `media` as `{ kind: "image", src, alt, width, height, caption }`. They render with `next/image`. Crop out customer data, internal hostnames and account details.
-- [x] **Portrait.** The street illustration (`assets/portrait.jpg`) is in About. The beach illustration you also sent isn't used, because one portrait is enough. Swap the file to change it.
+- [x] **Image style.** Keep the real hero photo. The About illustration was removed on 2026-10-14; About now uses paragraphs and skills only.
 - [x] **Photo.** Your GitHub avatar is in the hero (`assets/avatar.jpg`), added on 2026-10-14.
 
 ## 5. Optional
 
-- [ ] **Engineering notes.** The section stays hidden until `content/notes.ts` has at least one entry linking to real writing.
+- [ ] **Engineering notes.** Two drafts are written in `content/notes.ts`, with pages at `/notes/<slug>`. Review and approve the text before changing visibility to public, and set each date to its publication date. Production hides the section while both notes remain drafts.
 - [ ] Stories that weren't used because the evidence wasn't precise enough:
   - masked storage credentials overwriting real secrets on save (product area unclear);
   - `git-mate`, which is a design spec, not code yet.
