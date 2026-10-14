@@ -4,6 +4,7 @@ Personal site and case studies. Next.js App Router, TypeScript (strict), Tailwin
 
 - Design decisions: [`DESIGN.md`](./DESIGN.md)
 - Facts and assets still to confirm: [`CONTENT-TODO.md`](./CONTENT-TODO.md)
+- UI/UX audit, responsive evidence and refinement verification: [`UI-AUDIT.md`](./UI-AUDIT.md)
 
 ## Getting started
 
@@ -40,10 +41,9 @@ All copy lives in typed files in `content/`; components in `components/` only re
 | `content/profile.ts`  | Name, statement, intro, About, contact channels, experience, skills |
 | `content/projects.ts` | Selected work and the full case study for each project         |
 | `content/practice.ts` | "Beyond the interface" entries                                 |
-| `content/notes.ts`    | Engineering notes (the section is hidden while this is empty)  |
+| `content/notes.ts`    | Engineering notes: draft/public visibility, metadata and typed body blocks |
 | `content/types.ts`    | The content model                                              |
 | `assets/avatar.jpg`   | Hero photo (from the GitHub avatar), imported statically       |
-| `assets/portrait.jpg` | About illustration, imported statically                        |
 | `public/niadul-islam-munna-cv.pdf` | The CV linked from the hero, Contact and footer. Replace the file to update it; keep the name or change `profile.cv` and the CV channel |
 
 Conventions:
@@ -52,8 +52,10 @@ Conventions:
 - **Unconfirmed facts.** Write `pending("what is missing")` instead of guessing. It renders as a dashed marker and is listed by `pnpm check:content`.
 - **Drafts.** `visibility: "draft"` shows an item in development only. Production builds leave it out of the page, static params and the sitemap. Use `SHOW_DRAFTS=1 pnpm build` to preview drafts in a production build.
 - **Inline code.** Wrap identifiers in backticks inside content strings, e.g. "`beforeLoad` checks".
+- **Notes.** Add a unique slug, ISO date, summary, standfirst and body blocks (`p`, `h2`, `list`, `code`) in `content/notes.ts`. An optional `relatedProject` links to a case study. Keep new writing as `visibility: "draft"` until its text is approved; set the date to the publication date when publishing. Notes render at `/notes/<slug>`, and the homepage section appears when there are visible notes. Preview with `SHOW_DRAFTS=1 pnpm build`, then `SHOW_DRAFTS=1 pnpm test` to check the note pages as well as the public site.
 - **Images.** Each project's first `media` item is its plate. Schematics are drawn in `components/schematics.tsx`. For a cleared screenshot, add `{ kind: "image", src: "/work/<slug>/name.png", alt, width, height, caption }` and put the file in `public/`.
 - **Order.** The order of `projects` is the order of the index and of the previous/next links.
+- **Related practice.** Set a practice entry's optional `relatedProject` to a project slug to link its short homepage summary to the complete case study. Public entries must reference public projects.
 
 ## Configuration
 
@@ -88,10 +90,12 @@ Before deploying, run `pnpm check:content`. It should print nothing pending.
 - one `h1`, a canonical link, an `og:image` and no console errors on every page;
 - every internal link resolves; unknown slugs and drafts return 404; the sitemap excludes drafts;
 - Person JSON-LD on the home page;
+- note visibility, article metadata, BlogPosting JSON-LD and generated social images (including drafts when testing a `SHOW_DRAFTS=1` build);
 - the work index: hover and keyboard focus reveal the right plate on desktop, plates are static on mobile, and transitions are removed under reduced motion;
 - the skip link;
+- keyboard section jumps on every case study, same-tab practice links, and 44px mobile targets in the header, hero and footer;
 - the theme toggle: switching, persistence across reloads, clearing back to the system theme, and sync between open tabs;
-- content guards: no cliché phrases, unique slugs, every case study section filled.
+- content guards: no cliché phrases, unique slugs, valid practice references, every case study section filled.
 
 Locally the tests use the installed Google Chrome (`channel: "chrome"`) to avoid a browser download. In CI (`CI=1`), run `pnpm exec playwright install chromium` first.
 
@@ -102,6 +106,7 @@ app/
   layout.tsx              fonts, metadata, header and footer
   page.tsx                home page and Person JSON-LD
   work/[slug]/page.tsx    case studies (static, unknown slugs 404)
+  notes/[slug]/page.tsx   engineering notes (static, drafts excluded by default)
   opengraph-image.tsx     Open Graph images, set in Geist
   sitemap.ts, robots.ts, icon.svg, not-found.tsx
   globals.css             tokens, type scale, base styles, work-index CSS
@@ -109,7 +114,7 @@ components/               presentation only
 content/                  all copy and data
 lib/site.ts               visibility, site URL, project lookups
 lib/og.tsx                shared Open Graph frame and fonts
-assets/                   images imported by components (photo, illustration)
+assets/                   hero photo imported by the component
 scripts/check-content.mjs pending and draft report
 tests/                    Playwright tests
 ```
