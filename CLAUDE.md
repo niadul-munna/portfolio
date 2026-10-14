@@ -34,7 +34,7 @@ content/                ALL copy and data, typed (types.ts). Edit content here, 
 lib/site.ts             visibility filtering, siteUrl, project lookups
 lib/og.tsx              Open Graph frame (Satori)
 assets/                 avatar.jpg (hero photo), portrait.jpg (About illustration)
-public/                 niadul-islam-munna-cv.pdf
+public/                 niadul-islam-munna-cv.pdf (replace the file to update the CV; keep the name)
 scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 ```
 
@@ -79,5 +79,4 @@ The owner sometimes writes in Banglish. Reply in Banglish then, in Latin script 
 ## Open items (see CONTENT-TODO.md)
 
 - Promotion month in 2026 is unknown, so the site says "2026".
-- The CV PDF still says "Portfolio: in progress". Replace it with https://niadul.vercel.app.
 - Optional: a custom domain, real product screenshots (only with permission), and refining Sellorio's attribution (the product doc says Tenbyte owns it; the legal pages name ViteLoop).
