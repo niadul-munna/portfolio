@@ -74,7 +74,7 @@ export function ThemeToggle() {
       aria-label="Dark theme"
       aria-pressed={theme === null ? undefined : theme === "dark"}
       title={theme === null ? "Switch theme" : `Switch to ${next} theme`}
-      className="-m-1.5 inline-grid size-8 shrink-0 cursor-pointer place-items-center rounded-full text-muted transition-colors duration-200 hover:text-ink"
+      className="-m-1.5 inline-grid size-11 shrink-0 cursor-pointer place-items-center rounded-full text-muted transition-colors duration-200 hover:text-ink"
     >
       <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" className="size-4">
         <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.25" />
