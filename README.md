@@ -2,6 +2,7 @@
 
 Personal site and case studies. Next.js App Router, TypeScript (strict), Tailwind CSS v4. Every page is statically generated. The only client component is the theme toggle.
 
+- Agent entry point: [`AGENTS.md`](./AGENTS.md), then [`CLAUDE.md`](./CLAUDE.md) and the completed-session handoff in [`PLAN.md`](./PLAN.md).
 - Design decisions: [`DESIGN.md`](./DESIGN.md)
 - Facts and assets still to confirm: [`CONTENT-TODO.md`](./CONTENT-TODO.md)
 - UI/UX audit, responsive evidence and refinement verification: [`UI-AUDIT.md`](./UI-AUDIT.md)
@@ -28,7 +29,7 @@ Draft content is visible in development with a "Draft, not published" label.
 | `pnpm typecheck`     | Generate route types, then `tsc --noEmit`                             |
 | `pnpm test`          | Playwright tests against the production build (run `pnpm build` first) |
 | `pnpm verify`        | lint → typecheck → build → test                                       |
-| `pnpm check:content` | List unconfirmed facts and drafts; exits 1 while any are pending      |
+| `pnpm check:content` | List unconfirmed facts and drafts; exits 1 for pending public facts    |
 
 Stop `pnpm dev` before running `pnpm build` or `pnpm verify`, or restart it afterwards. They share `.next/`, and once a dev server kept serving stale CSS after a build ran alongside it.
 
