@@ -19,6 +19,12 @@ import { getAdjacentProjects, getProject, projectNumber, visibleProjects } from 
 // Every case study is known at build time; anything else is a 404.
 export const dynamicParams = false;
 
+const sectionLinks = [
+  { href: "#contributions", label: "What I did" },
+  { href: "#decisions", label: "Decisions" },
+  { href: "#outcome", label: "Outcome" },
+];
+
 export function generateStaticParams() {
   return visibleProjects.map((project) => ({ slug: project.slug }));
 }
@@ -82,6 +88,13 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
             <p className="mt-6 max-w-[38em] font-serif text-standfirst text-ink-soft lg:mt-8">
               {project.standfirst}
             </p>
+            <nav aria-label="Case study sections" className="mt-5 flex flex-wrap gap-x-6 gap-y-1 font-mono text-meta">
+              {sectionLinks.map((section) => (
+                <a key={section.href} href={section.href} className="link inline-flex min-h-11 items-center text-ink">
+                  {section.label}
+                </a>
+              ))}
+            </nav>
           </div>
         </header>
 
