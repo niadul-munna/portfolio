@@ -98,6 +98,8 @@ The hero has your GitHub photo top-aligned with the intro paragraph: 192px on de
 
 The hero photo is the site's only portrait. About is text: personal paragraphs in columns 4–9 and skills in columns 10–12 on desktop. On tablets the paragraphs span six of the eight columns, with skills below; on phones both take the full width. Keeping one real photo gives the site a consistent image style.
 
+The accepted photo treatment is left-aligned at every width, square with 3px corners. A centered circular mobile preview was tried and reverted at the owner's request. Retain the tighter photo-to-text spacing described above.
+
 ## What the design avoids
 
 Gradients, glass, glow, blobs, grain, 3D, icon-and-title card grids, pill clouds of skills, progress bars, counters, typing effects, carousels, sticky headers, giant-name hero, uppercase tracked micro-labels. The only icons are typographic arrows.
