@@ -8,7 +8,7 @@ How the copy was sourced: commit history and code in the project repositories (`
 
 ## 1. Before publishing (blocking)
 
-- [x] Email, GitHub (`niadul-munna`) and LinkedIn. Added on 2026-10-14.
+- [x] Email, GitHub (`niadul-munna`), LinkedIn and X (`Niadul_Munna`). Added on 2026-10-14; X supplied by the owner.
 - [x] CV published at `/niadul-islam-munna-cv.pdf`. Linked from the hero, Contact and footer.
 - [x] Email: `niadulislammunna@gmail.com` on both the site and the CV. Settled on 2026-10-14.
 - [x] CV PDF updated on 2026-10-14. It links to `https://niadul.vercel.app` and its email matches the site.
