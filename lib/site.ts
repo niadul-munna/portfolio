@@ -1,3 +1,4 @@
+import { notes } from "@/content/notes";
 import { practice } from "@/content/practice";
 import { projects } from "@/content/projects";
 import type { Visibility } from "@/content/types";
@@ -32,6 +33,11 @@ export const siteUrl = resolveSiteUrl().replace(/\/+$/, "");
 
 export const visibleProjects = projects.filter(isVisible);
 export const visiblePractice = practice.filter(isVisible);
+export const visibleNotes = notes.filter(isVisible);
+
+export function getNote(slug: string) {
+  return visibleNotes.find((note) => note.slug === slug);
+}
 
 export function getProject(slug: string) {
   return visibleProjects.find((project) => project.slug === slug);
