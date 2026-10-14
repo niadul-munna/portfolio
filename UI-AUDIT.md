@@ -86,7 +86,7 @@ Beyond the interface's rendered word count drops from 322 to 272, including its 
 - Regression coverage: `tests/content.spec.ts`, `tests/site.spec.ts`.
 - Documentation: `UI-AUDIT.md`, `DESIGN.md`, `README.md`, `CLAUDE.md`, `CONTENT-TODO.md`, `PLAN.md`.
 
-The working tree also contains earlier approved note, experience and About-photo changes. Those were preserved and verified; they are not attributed to this audit.
+This audit also verified the earlier approved note, experience and About-photo changes. Those were preserved; they are not attributed to this audit.
 
 ## Verification results
 
@@ -103,7 +103,7 @@ The working tree also contains earlier approved note, experience and About-photo
 | JavaScript-disabled production browser | At 375px in dark/reduced-motion mode: homepage skip focus, mobile Work navigation and static plates passed; all four cases' three native links transferred focus to their headings. Draft notes remained absent. |
 | Public external links | Tenbyte, Sellorio, Onubad and the GitHub profile returned HTTP 200. LinkedIn returned HTTP 999 to the automated request; it remains unverified rather than classified as broken. Email links were inspected without sending mail. |
 | Independent code review | No critical, important or minor findings. |
-| `git diff --check` | Passed. Changes remain uncommitted. |
+| `git diff --check` | Passed before publication; final Git status is recorded in the completion handoff below. |
 
 Screenshots were captured and visually inspected across all target widths. The review covered hero wrapping, project plates, case-study openings, contributions/decisions, mobile diagrams and legends, About and footer in both themes. No visual regression requiring a design change was found.
 
@@ -145,15 +145,27 @@ Dark variants use `-dark-` in the same filenames. Examples: [wide homepage](.pla
 - Both engineering notes remain drafts pending the previously required text approval and publication dates.
 - LinkedIn's destination needs a normal human-browser check; automated verification was blocked by its HTTP 999 response.
 
-The complete factual checklist is in [`CONTENT-TODO.md`](./CONTENT-TODO.md). No commit, push or deployment is included in this audit.
+The complete factual checklist is in [`CONTENT-TODO.md`](./CONTENT-TODO.md). The audit preceded Git publication; subsequent commits and deployment are recorded below.
 
 ## Owner-directed follow-ups
 
-The screenshots and measurements above record the original audit. Two subsequent owner requests refined the working tree further:
+The screenshots and measurements above record the original audit. Subsequent owner requests refined the working tree further:
 
 | Before | After |
 | --- | --- |
 | Nexail had no responsibility summary. | Two owner-confirmed bullets describe building the company website and implementing responsive layouts. Recorded in `content/profile.ts` and `CONTENT-TODO.md`. Screenshots are in `.playwright-mcp/nexail/`. |
 | The hero photo occupied three desktop grid columns, leaving a 144px visual gap at 1440/1920px. | Its dedicated row fits the photo width and uses a 32px desktop gap. Introduction/CTA width is capped at 640px. Tablet gap stays 24px, its image now renders as a full 160px square, and the mobile stack retains its prior geometry. Implemented in `components/home/hero.tsx`; `DESIGN.md` describes the spacing. |
+| A centered circular mobile photo was requested as a preview. | The owner rejected it and requested a revert. The accepted photo is left-aligned at every width, square with 3px corners. `.playwright-mcp/hero-gap/circular-preview/` is a rejected experiment, not the final design. |
+| Contact channels contained Email, GitHub, LinkedIn and CV. | The owner supplied `https://x.com/Niadul_Munna`. X now appears in Contact, the footer and Person `sameAs`; links and overflow were checked at 320, 375, 768, 1440 and 1920px in both themes. Evidence is in `.playwright-mcp/x-profile/`. |
 
 The hero was captured before and after at 375, 768, 1024, 1440 and 1920px in both themes, with no overflow. Updated evidence: [desktop before](.playwright-mcp/hero-gap/before/1440-dark.png), [desktop after](.playwright-mcp/hero-gap/after/1440-dark.png), [tablet](.playwright-mcp/hero-gap/after/768-light.png), [mobile](.playwright-mcp/hero-gap/after/375-dark.png). Measurements are in `.playwright-mcp/hero-gap/{before,after}/measurements.json`.
+
+## Completion handoff — 2026-10-14
+
+- The owner ended the implementation session. The authoritative handoff and future owner decisions are in [`PLAN.md`](./PLAN.md).
+- The application changes were pushed to `origin/main` as **33 single-file commits** after `15c1783`: the first batch ended at `b7285b4`, followed by `4e713fe` (X profile) and `b5785f3` (content checklist).
+- Latest production `pnpm verify`, after adding X: lint, TypeScript, production build and **54 tests passed** (24.6s test run). Latest draft-preview verification, before the X-only update: **68 tests passed** (27.7s). `pnpm check:content` and `git diff --check` passed.
+- Vercel's status for `b5785f3` reported **Deployment has completed**. A read-only check of the live homepage returned HTTP 200 and found both rendered X links.
+- Both engineering notes remain drafts. The centered circular photo experiment is reverted. No further UI work or publication is authorized by ending this session.
+- The application working tree was clean before this final documentation update. These handoff-document edits remain local until separately authorized for commit/push; check `git status` rather than assuming a clean checkout.
+- Screenshots and browser scripts are gitignored local artifacts; a fresh clone will not contain them. The text audit remains available, and browser evidence can be recreated using the available local test tools.
