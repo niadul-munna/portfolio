@@ -57,7 +57,7 @@ Newsreader is used only where a person is speaking at length. It never appears i
 
 ## Signature interaction: the work index
 
-The selected-work list is an index. Each row shows a number, a title, its category and dates, and a one-line summary. On desktop with a fine pointer, hovering or focusing a row:
+The selected-work list is an index. Each row shows a number, a title, its category, dates and status, and a one-line summary. On desktop with a fine pointer, hovering or focusing a row:
 
 - dims the other titles to muted colour (200 ms), and
 - reveals that project's plate in the right-hand columns, clipping open from top to bottom (240 ms, `cubic-bezier(.2,.7,.2,1)`).
@@ -70,15 +70,33 @@ There are no cleared product screenshots yet, and the brief rules out mock dashb
 
 ## Theme
 
-Light is the default design. Dark follows the system setting until the reader chooses otherwise with the toggle at the end of the navigation: a half-filled circle, 32px hit area, labelled "Dark theme" with `aria-pressed`. One click flips the theme on screen. Choosing the theme the system already uses clears the saved choice, so the site follows the system again without a separate "System" option. The choice is stored in `localStorage`, applied by an inline script in `<head>` before first paint, and kept in sync across open tabs. The dark tokens live twice in `globals.css`, under the media query and under `[data-theme="dark"]`, and must stay identical.
+Light is the default design. Dark follows the system setting until the reader chooses otherwise with the toggle at the end of the navigation: a half-filled circle, 44px hit area, labelled "Dark theme" with `aria-pressed`. One click flips the theme on screen. Choosing the theme the system already uses clears the saved choice, so the site follows the system again without a separate "System" option. The choice is stored in `localStorage`, applied by an inline script in `<head>` before first paint, and kept in sync across open tabs. The dark tokens live twice in `globals.css`, under the media query and under `[data-theme="dark"]`, and must stay identical.
 
 The toggle is the only client component the site ships.
 
-## Photo and portrait
+## Reading and navigation
 
-The hero has your GitHub photo in the left label column, top-aligned with the intro paragraph: 192px on desktop, 144–160px beside the intro on tablets, 112px above it on phones. It loads eagerly but isn't preloaded, because the headline, not the photo, is the largest element on screen.
+The hero introduces the person, employer and product domains concisely; the work index supplies the technical evidence. Career dates stay in Experience, while About begins with the personal engineering perspective. Header, hero and footer controls have 44px targets without enlarging their typography or icons.
 
-The About section has an illustrated portrait in the left-hand label column (columns 1–3), top-aligned with the first paragraph like an author photo in a magazine. It's the only colour-saturated element on the page, so it stays small: three columns wide on desktop, and at most 15rem on phones, where it sits above the text. It is served through `next/image` as AVIF/WebP.
+Beyond the interface keeps all six entries. Work already covered by a case study gets a short summary and an internal link; complete subtitle-service and video-production explanations live in Vidinfra and Sellorio. The support and personal-tool stories retain their detail.
+
+Case studies open with native links to What I did, Decisions and Outcome. Their headings accept programmatic focus, so keyboard readers arrive at the same content as pointer readers. No sticky navigation or extra client code is needed. The shared footer keeps contacts and the update date, without a font/framework colophon.
+
+The rendered evidence and before/after decisions for these refinements are recorded in [`UI-AUDIT.md`](./UI-AUDIT.md).
+
+## Notes
+
+Engineering notes use the same left spine as the case studies, with “Note” and an ISO date in mono in columns 1–3. The title uses `text-title`; the opening paragraph uses Newsreader and `text-standfirst`. The body begins in column 4 and spans through column 10, with a maximum measure of 66ch in Geist `text-body`. Section headings use `text-heading`. Below desktop the spine stacks above the writing.
+
+Content is typed in `content/notes.ts` as paragraphs, headings, lists and code blocks. Inline backticks use `RichText`. Code blocks use plain `pre`/`code` in JetBrains Mono, scroll within their own width, and have no syntax-highlighting dependency. A related case study is linked below the body.
+
+Draft notes carry a visible review label in development or a `SHOW_DRAFTS=1` preview. Normal production builds exclude their pages, homepage links and social images; the sitemap always excludes drafts. Each visible note has article metadata, a shared-frame social image and `BlogPosting` structured data.
+
+## Hero photo
+
+The hero has your GitHub photo top-aligned with the intro paragraph: 192px on desktop, 160px beside the intro on tablets, 112px above it on phones. Its own row fits the photo's actual width, with a 24px gap to the text on tablets and 32px on desktop, rather than leaving empty grid columns beside the image. The introduction and CTAs keep a maximum width of 640px. It loads eagerly but isn't preloaded, because the headline, not the photo, is the largest element on screen.
+
+The hero photo is the site's only portrait. About is text: personal paragraphs in columns 4–9 and skills in columns 10–12 on desktop. On tablets the paragraphs span six of the eight columns, with skills below; on phones both take the full width. Keeping one real photo gives the site a consistent image style.
 
 ## What the design avoids
 
