@@ -19,6 +19,12 @@ const contactChannels: ContactChannel[] = [
     display: "linkedin.com/in/niadul-munna",
   },
   {
+    label: "X",
+    kind: "url",
+    value: "https://x.com/Niadul_Munna",
+    display: "x.com/Niadul_Munna",
+  },
+  {
     label: "CV",
     kind: "file",
     value: "/niadul-islam-munna-cv.pdf",
