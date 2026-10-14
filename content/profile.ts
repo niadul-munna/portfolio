@@ -35,7 +35,7 @@ export const profile = {
   role: "Frontend Developer",
   employer: "Tenbyte Cloud",
   employerUrl: "https://tenbyte.io",
-  location: "Bangladesh",
+  location: "Dhaka, Bangladesh",
   timezone: "GMT+6",
   /** Used for <title>, Open Graph and the meta description. */
   description:
@@ -43,10 +43,10 @@ export const profile = {
 
   /** The hero statement. Short enough to set large. */
   statement:
-    "I build the interfaces of a video platform and a CDN, and increasingly the systems underneath them.",
+    "I build interfaces that work beyond the screen.",
 
   intro:
-    "I’m Niadul Islam, a frontend developer at Tenbyte Cloud. Day to day that means React, Next.js and TypeScript: a video library, CDN analytics, auth that holds up across a stack of open tabs, a website in six languages. A growing share of my time goes to the other side of the API, in Go and Laravel services, Postgres and deploys, as I work toward product engineering.",
+    "I’m Niadul Islam, a frontend developer at Tenbyte Cloud. I work on video infrastructure, CDN products, and the services that keep them reliable.",
 
   focus: "React, Next.js, TypeScript; growing toward full-stack",
 
@@ -54,12 +54,7 @@ export const profile = {
     alt: "Photo of Niadul Islam outdoors in a cap and sunglasses, against a cloudy sky.",
   },
 
-  portrait: {
-    alt: "Illustrated portrait of Niadul: curly hair, a short beard, earphones and a backpack, waving on a street with a rickshaw behind him.",
-  },
-
   about: [
-    "I joined Tenbyte Cloud in July 2025 as a junior frontend developer and became a frontend developer in 2026. The products I work on sit close to infrastructure: video hosting, a CDN, and the console customers use to run both.",
     "The work I like best is in the middle, where an interface meets a system that doesn’t behave quite the way the screen assumes. A date picker and a backend that disagree about midnight. Several tabs and one refresh token. A cache that can’t tell an HTML page from a server component payload. Fixing those means reading both sides, which is how I ended up spending more of my time on the other one.",
     "Outside work I build small tools I need myself. The latest is Onubad, a panel app on my Linux desktop that translates between English and Bangla. Next, I want to own product features end to end, from the data model to the last focus ring.",
   ],
@@ -77,13 +72,23 @@ export const experience: Position[] = [
     description: "CDN, cloud and video infrastructure",
     period: "Jul 2025 — present",
     roles: [
-      { title: "Frontend Developer", period: "2026 — present" },
-      { title: "Junior Frontend Developer", period: "Jul 2025 — 2026" },
+      { title: "Frontend Developer", period: "May 2026 — present" },
+      { title: "Junior Frontend Developer", period: "Jul 2025 — May 2026" },
     ],
     summary: [
       "Tenbyte Console: built most of the original CDN screens, then the Vidinfra video library, session handling and the move from Next.js to TanStack Start.",
       "tenbyte.io: built and maintain the corporate website on Next.js and Payload CMS, in six languages.",
       "Support: a support desk application, and the server side of single sign-on into it from Tenbyte’s account service.",
+    ],
+  },
+  {
+    organisation: "Nexail Ltd",
+    description: "Full-time, remote",
+    period: "Dec 2024 — Jul 2025",
+    roles: [{ title: "Frontend Developer", period: "Dec 2024 — Jul 2025" }],
+    summary: [
+      "Built Nexail’s company website from start to finish.",
+      "Implemented responsive layouts for mobile, tablet and desktop.",
     ],
   },
 ];
