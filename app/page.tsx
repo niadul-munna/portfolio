@@ -8,12 +8,11 @@ import avatar from "@/assets/avatar.jpg";
 import { JsonLd } from "@/components/json-ld";
 import { Section } from "@/components/section";
 import { WorkIndex } from "@/components/work-index";
-import { notes } from "@/content/notes";
 import { experience, profile, skills } from "@/content/profile";
 import { isPending } from "@/content/types";
-import { siteUrl, visiblePractice, visibleProjects } from "@/lib/site";
+import { siteUrl, visibleNotes, visiblePractice, visibleProjects } from "@/lib/site";
 
-const sections = ["work", "beyond", "experience", "about", ...(notes.length ? ["notes"] : []), "contact"];
+const sections = ["work", "beyond", "experience", "about", ...(visibleNotes.length ? ["notes"] : []), "contact"];
 
 function sectionNumber(id: string) {
   return String(sections.indexOf(id) + 1).padStart(2, "0");
@@ -37,7 +36,7 @@ function personSchema() {
       channel.kind === "email" && !isPending(channel.value) ? [`mailto:${channel.value}`] : [],
     )[0],
     worksFor: { "@type": "Organization", name: profile.employer, url: profile.employerUrl },
-    address: { "@type": "PostalAddress", addressCountry: "BD" },
+    address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
     knowsAbout: skills.flatMap((group) => group.items.split(", ")),
     ...(sameAs.length ? { sameAs } : {}),
   };
@@ -75,18 +74,21 @@ export default function HomePage() {
         <About />
       </Section>
 
-      {notes.length ? (
+      {visibleNotes.length ? (
         <Section id="notes" number={sectionNumber("notes")} title="Engineering notes">
           <ul>
-            {notes.map((note) => (
-              <li key={note.href} className="page-grid gap-y-2 border-t border-line py-6 last:border-b">
+            {visibleNotes.map((note) => (
+              <li key={note.slug} className="page-grid gap-y-2 border-t border-line py-6 last:border-b">
                 <time dateTime={note.date} className="col-span-full font-mono text-meta text-muted lg:col-span-3">
                   {note.date}
                 </time>
                 <div className="col-span-full md:col-span-6">
-                  <Link href={note.href} className="link text-ink">
+                  <Link href={`/notes/${note.slug}`} className="link text-ink">
                     {note.title}
                   </Link>
+                  {note.visibility === "draft" ? (
+                    <p className="mt-2 font-mono text-meta text-muted">Draft, not published</p>
+                  ) : null}
                   <p className="mt-1 text-ui text-muted">{note.summary}</p>
                 </div>
               </li>
