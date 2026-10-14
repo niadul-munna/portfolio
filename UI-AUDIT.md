@@ -167,5 +167,5 @@ The hero was captured before and after at 375, 768, 1024, 1440 and 1920px in bot
 - Latest production `pnpm verify`, after adding X: lint, TypeScript, production build and **54 tests passed** (24.6s test run). Latest draft-preview verification, before the X-only update: **68 tests passed** (27.7s). `pnpm check:content` and `git diff --check` passed.
 - Vercel's status for `b5785f3` reported **Deployment has completed**. A read-only check of the live homepage returned HTTP 200 and found both rendered X links.
 - Both engineering notes remain drafts. The centered circular photo experiment is reverted. No further UI work or publication is authorized by ending this session.
-- The application working tree was clean before this final documentation update. These handoff-document edits remain local until separately authorized for commit/push; check `git status` rather than assuming a clean checkout.
+- The application working tree was clean before this final documentation update. The owner then authorized six one-file documentation commits and a push; check `git status` and `git log` for the resulting repository state.
 - Screenshots and browser scripts are gitignored local artifacts; a fresh clone will not contain them. The text audit remains available, and browser evidence can be recreated using the available local test tools.
