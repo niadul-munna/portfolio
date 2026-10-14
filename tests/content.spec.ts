@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "@playwright/test";
+import { notes } from "../content/notes";
 import { practice } from "../content/practice";
 import { profile } from "../content/profile";
 import { projects } from "../content/projects";
@@ -38,11 +39,41 @@ test("content avoids cliché copy", () => {
   }
 });
 
-test("project slugs and practice ids are unique", () => {
+test("project and note slugs and practice ids are unique", () => {
   const slugs = projects.map((project) => project.slug);
   expect(new Set(slugs).size).toBe(slugs.length);
   const ids = practice.map((entry) => entry.id);
   expect(new Set(ids).size).toBe(ids.length);
+  const noteSlugs = notes.map((note) => note.slug);
+  expect(new Set(noteSlugs).size).toBe(noteSlugs.length);
+});
+
+test("every note has a body and a valid related project", () => {
+  for (const note of notes) {
+    expect(note.body.length, note.slug).toBeGreaterThan(0);
+    if (note.relatedProject) {
+      expect(projects.some((project) => project.slug === note.relatedProject), note.slug).toBe(true);
+    }
+    const prose = [
+      note.standfirst,
+      ...note.body.flatMap((block) => {
+        if (block.kind === "list") return block.items;
+        return block.kind === "code" ? [] : [block.text];
+      }),
+    ].join(" ").trim();
+    const wordCount = prose.split(/\s+/).length;
+    expect(wordCount, `${note.slug} word count`).toBeGreaterThanOrEqual(600);
+    expect(wordCount, `${note.slug} word count`).toBeLessThanOrEqual(900);
+  }
+});
+
+test("practice references resolve to case studies with matching visibility", () => {
+  for (const entry of practice) {
+    if (!entry.relatedProject) continue;
+    const related = projects.find((project) => project.slug === entry.relatedProject);
+    expect(related, entry.id).toBeDefined();
+    if (entry.visibility === "public") expect(related?.visibility, entry.id).toBe("public");
+  }
 });
 
 test("every case study has each section filled in", () => {
@@ -66,6 +97,7 @@ test("public content has no pending facts", () => {
     profile,
     projects: projects.filter((project) => project.visibility === "public"),
     practice: practice.filter((entry) => entry.visibility === "public"),
+    notes: notes.filter((note) => note.visibility === "public"),
   };
   expect(findPending(publicContent)).toEqual([]);
 });
