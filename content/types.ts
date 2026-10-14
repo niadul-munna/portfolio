@@ -109,6 +109,8 @@ export type PracticeEntry = {
   status: WorkStatus;
   stack: string[];
   link?: ExternalLink;
+  /** Existing case study carrying this entry's full technical explanation. */
+  relatedProject?: string;
 };
 
 export type Role = {
@@ -118,7 +120,8 @@ export type Role = {
 
 export type Position = {
   organisation: string;
-  description: string;
+  /** What the organisation does, or the terms of the role (e.g. "Full-time, remote"). */
+  description?: string;
   period: string;
   roles: Role[];
   summary: string[];
@@ -133,11 +136,22 @@ export type ContactChannel = {
   display?: string;
 };
 
+export type NoteBlock =
+  | { kind: "p"; text: string }
+  | { kind: "h2"; text: string }
+  | { kind: "list"; items: string[] }
+  | { kind: "code"; language: string; code: string };
+
 export type Note = {
+  slug: string;
+  visibility: Visibility;
   title: string;
   /** ISO date, e.g. "2026-10-14". */
   date: string;
   summary: string;
-  /** Where the note is published: an external URL or an internal path. */
-  href: string;
+  /** Opening paragraph, set in Newsreader. */
+  standfirst: string;
+  /** Slug of a related case study. */
+  relatedProject?: string;
+  body: NoteBlock[];
 };
