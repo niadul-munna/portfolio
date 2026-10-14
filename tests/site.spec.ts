@@ -1,9 +1,15 @@
 import { expect, test, type Page } from "@playwright/test";
+import { notes } from "../content/notes";
+import { practice } from "../content/practice";
 import { projects } from "../content/projects";
 
 const publicSlugs = projects.filter((p) => p.visibility === "public").map((p) => p.slug);
 const draftSlugs = projects.filter((p) => p.visibility === "draft").map((p) => p.slug);
-const pages = ["/", ...publicSlugs.map((slug) => `/work/${slug}`)];
+const showDrafts = process.env.SHOW_DRAFTS === "1";
+const publicNotes = notes.filter((note) => note.visibility === "public");
+const draftNotes = notes.filter((note) => note.visibility === "draft");
+const visibleNotes = notes.filter((note) => note.visibility === "public" || showDrafts);
+const pages = ["/", ...publicSlugs.map((slug) => `/work/${slug}`), ...visibleNotes.map((note) => `/notes/${note.slug}`)];
 const widths = [320, 375, 768, 1440, 1920];
 
 /**
@@ -67,18 +73,77 @@ test("every internal link resolves", async ({ page, request }) => {
   }
 });
 
-test("unknown case studies and drafts return 404", async ({ request }) => {
+test("unknown case studies and notes return 404; drafts require preview", async ({ request }) => {
   expect((await request.get("/work/not-a-project")).status()).toBe(404);
+  expect((await request.get("/notes/not-a-note")).status()).toBe(404);
   for (const slug of draftSlugs) {
-    expect((await request.get(`/work/${slug}`)).status()).toBe(404);
+    expect((await request.get(`/work/${slug}`)).status()).toBe(showDrafts ? 200 : 404);
+  }
+  for (const note of draftNotes) {
+    expect((await request.get(`/notes/${note.slug}`)).status()).toBe(showDrafts ? 200 : 404);
+    if (!showDrafts) {
+      for (const image of ["opengraph-image", "twitter-image"]) {
+        expect((await request.get(`/notes/${note.slug}/${image}`)).status()).toBe(404);
+      }
+    }
   }
 });
 
-test("sitemap lists the home page and public case studies only", async ({ request }) => {
+test("sitemap lists the home page, public case studies and public notes only", async ({ request }) => {
   const xml = await (await request.get("/sitemap.xml")).text();
   for (const slug of publicSlugs) expect(xml).toContain(`/work/${slug}`);
   for (const slug of draftSlugs) expect(xml).not.toContain(`/work/${slug}`);
+  expect(xml).toMatch(/<loc>[^<]+\/<\/loc>/);
+  for (const note of publicNotes) expect(xml).toContain(`/notes/${note.slug}`);
+  for (const note of draftNotes) expect(xml).not.toContain(`/notes/${note.slug}`);
 });
+
+test("home page lists visible notes and labels drafts", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("#notes")).toHaveCount(visibleNotes.length ? 1 : 0);
+  for (const note of notes) {
+    const link = page.locator(`#notes a[href='/notes/${note.slug}']`);
+    await expect(link).toHaveCount(visibleNotes.includes(note) ? 1 : 0);
+    if (showDrafts && note.visibility === "draft") {
+      await expect(link.locator("..").getByText("Draft, not published")).toBeVisible();
+    }
+  }
+});
+
+for (const note of visibleNotes) {
+  test(`note ${note.slug} has article metadata, structured data and social images`, async ({ page, request }) => {
+    await page.goto(`/notes/${note.slug}`);
+    await expect(page.locator("h1")).toHaveText(note.title);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", new RegExp(`/notes/${note.slug}$`));
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", note.summary);
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute("content", "article");
+    await expect(page.locator('meta[property="article:published_time"]')).toHaveAttribute("content", note.date);
+
+    const json = await page.locator('script[type="application/ld+json"]').textContent();
+    const data = JSON.parse(json ?? "{}");
+    expect(data["@type"]).toBe("BlogPosting");
+    expect(data.headline).toBe(note.title);
+    expect(data.datePublished).toBe(note.date);
+    expect(data.author).toMatchObject({ "@type": "Person", name: "Niadul Islam" });
+    expect(data.mainEntityOfPage).toMatch(new RegExp(`/notes/${note.slug}$`));
+
+    if (note.visibility === "draft") {
+      await expect(page.getByText("Draft, not published. Awaiting review.")).toBeVisible();
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+    }
+    if (note.relatedProject) {
+      await expect(page.locator(`article footer a[href='/work/${note.relatedProject}']`)).toBeVisible();
+    }
+    for (const selector of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+      const url = await page.locator(selector).first().getAttribute("content");
+      expect(url).toBeTruthy();
+      const response = await request.get(new URL(url!).pathname);
+      expect(response.status()).toBe(200);
+      expect(response.headers()["content-type"]).toBe("image/png");
+      expect((await response.body()).length).toBeGreaterThan(1000);
+    }
+  });
+}
 
 test("home page publishes Person structured data", async ({ page }) => {
   await page.goto("/");
@@ -87,6 +152,45 @@ test("home page publishes Person structured data", async ({ page }) => {
   expect(data["@type"]).toBe("Person");
   expect(data.name).toBe("Niadul Islam");
 });
+
+test("standalone header, hero and footer controls have comfortable mobile targets", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto("/");
+  const controls = page.locator('body > header a, body > header button, section[aria-labelledby="intro-title"] a, body > footer a');
+  for (const control of await controls.all()) {
+    if (!(await control.isVisible())) continue;
+    const box = await control.boundingBox();
+    const label = (await control.getAttribute("aria-label")) ?? (await control.textContent()) ?? "Control";
+    expect(box?.height, label).toBeGreaterThanOrEqual(44);
+    expect(box?.width, label).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test("practice case study links navigate within the current tab", async ({ page }) => {
+  for (const entry of practice.filter((item) => item.visibility === "public" && item.relatedProject)) {
+    await page.goto("/");
+    const row = page.locator("#beyond li").filter({ has: page.getByRole("heading", { name: entry.title, exact: true }) });
+    const link = row.getByRole("link", { name: /case study/ });
+    await expect(link).not.toHaveAttribute("target", "_blank");
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`/work/${entry.relatedProject}$`));
+  }
+});
+
+for (const slug of publicSlugs) {
+  test(`case study ${slug} supports keyboard jumps to its main sections`, async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 900 });
+    await page.goto(`/work/${slug}`);
+    const navigation = page.getByRole("navigation", { name: "Case study sections" });
+    for (const [label, id] of [["What I did", "contributions"], ["Decisions", "decisions"], ["Outcome", "outcome"]]) {
+      await navigation.getByRole("link", { name: label, exact: true }).focus();
+      await page.keyboard.press("Enter");
+      await expect(page).toHaveURL(new RegExp(`#${id}$`));
+      await expect(page.locator(`#${id}`)).toBeFocused();
+      await expect(page.locator(`#${id}`)).toBeInViewport();
+    }
+  });
+}
 
 test.describe("work index", () => {
   const plateOpacities = (page: Page) =>
