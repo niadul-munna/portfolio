@@ -13,10 +13,22 @@ function isVisible(item: { visibility: Visibility }) {
   return item.visibility === "public" || showDrafts;
 }
 
-/** Canonical origin, without a trailing slash. Set NEXT_PUBLIC_SITE_URL in production. */
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
-).replace(/\/+$/, "");
+/**
+ * Canonical origin, without a trailing slash. NEXT_PUBLIC_SITE_URL wins when
+ * set. On Vercel, the project's production domain is used (Vercel sets
+ * VERCEL_PROJECT_PRODUCTION_URL at build time, and it follows a custom domain
+ * once one is assigned), so previews also point canonicals at production.
+ * Locally, localhost.
+ */
+function resolveSiteUrl() {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  return "http://localhost:3000";
+}
+
+export const siteUrl = resolveSiteUrl().replace(/\/+$/, "");
 
 export const visibleProjects = projects.filter(isVisible);
 export const visiblePractice = practice.filter(isVisible);

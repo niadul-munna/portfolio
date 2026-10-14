@@ -12,7 +12,8 @@ How the copy was sourced: commit history and code in the project repositories (`
 - [x] CV published at `/niadul-islam-munna-cv.pdf`. Linked from the hero, Contact and footer.
 - [x] Email: `niadulislammunna@gmail.com` on both the site and the CV. Settled on 2026-10-14.
 - [ ] **Update the CV PDF before going live.** It says "Portfolio: in progress"; replace that with the site URL.
-- [ ] **Domain.** Set `NEXT_PUBLIC_SITE_URL` (for example `https://example.com`). Canonical URLs, the sitemap, robots.txt and Open Graph all use it. Without it they point at `localhost`.
+- [x] **Deployed** on Vercel at `https://portfolio-eta-seven.vercel.app` on 2026-10-14. Canonical URLs follow Vercel's production domain automatically.
+- [ ] Optional: a custom domain, e.g. your name. Add it in Vercel → Project → Domains; canonicals switch to it on the next deploy.
 - [ ] **Employer sign-off.** Confirm Tenbyte is comfortable with the level of detail in the three public case studies, especially the descriptions of session handling, caching and the support sign-in.
 
 ## 2. Facts to confirm

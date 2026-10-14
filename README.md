@@ -59,14 +59,14 @@ Conventions:
 
 | Variable               | Purpose                                                                                                  |
 | ---------------------- | -------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin, e.g. `https://example.com`. Used for canonical URLs, Open Graph, sitemap and robots. **Required in production.** |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin, e.g. `https://example.com`. Used for canonical URLs, Open Graph, sitemap and robots. Optional on Vercel, which falls back to the project's production domain (`VERCEL_PROJECT_PRODUCTION_URL`). **Required anywhere else.** |
 | `SHOW_DRAFTS`          | Set to `1` to include drafts in a production build.                                                     |
 
 ## Deployment
 
 The output is fully static apart from Next's image optimiser, so it runs anywhere Next.js runs.
 
-**Vercel:** import the repository, set `NEXT_PUBLIC_SITE_URL`, and deploy. No other configuration is needed.
+**Vercel:** import the repository and deploy. Canonical URLs use the project's production domain automatically; set `NEXT_PUBLIC_SITE_URL` only to override it. Per-deployment URLs sit behind Vercel's Deployment Protection by default; share the production domain.
 
 **Self-hosted Node (Linux, PM2, Nginx):**
 
