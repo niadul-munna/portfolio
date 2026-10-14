@@ -16,7 +16,7 @@ export function SiteHeader() {
       <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 pt-6 pb-5 sm:pt-8">
         <Link
           href="/"
-          className="-mx-1 px-1 text-ui font-medium tracking-[-0.01em] text-ink transition-colors duration-200 hover:text-accent"
+          className="-mx-1 inline-flex min-h-11 items-center px-1 text-ui font-medium tracking-[-0.01em] text-ink transition-colors duration-200 hover:text-accent"
         >
           {profile.name}
         </Link>
@@ -27,7 +27,7 @@ export function SiteHeader() {
                 <li key={item.href} className={item.wideOnly ? "hidden sm:block" : undefined}>
                   <Link
                     href={item.href}
-                    className="-mx-1 inline-block px-1 py-2 transition-colors duration-200 hover:text-ink"
+                    className="-mx-1 inline-flex min-h-11 min-w-11 items-center px-1 py-2 transition-colors duration-200 hover:text-ink"
                   >
                     {item.label}
                   </Link>
