@@ -12,7 +12,9 @@ export function ExperienceList({ positions }: { positions: Position[] }) {
             <h3 className="text-[1.1875rem] leading-snug font-medium tracking-[-0.012em] text-ink">
               {position.organisation}
             </h3>
-            <p className="mt-1 text-ui text-muted">{position.description}</p>
+            {position.description ? (
+              <p className="mt-1 text-ui text-muted">{position.description}</p>
+            ) : null}
 
             <ol className="mt-5 grid gap-1.5" aria-label={`Roles at ${position.organisation}`}>
               {position.roles.map((role) => (
@@ -23,16 +25,18 @@ export function ExperienceList({ positions }: { positions: Position[] }) {
               ))}
             </ol>
 
-            <ul className="mt-6 grid gap-3 text-ui text-ink-soft">
-              {position.summary.map((line) => (
-                <li key={line} className="grid grid-cols-[1rem_1fr]">
-                  <span aria-hidden="true" className="text-muted">
-                    –
-                  </span>
-                  <span className="max-w-[62ch]">{line}</span>
-                </li>
-              ))}
-            </ul>
+            {position.summary.length ? (
+              <ul className="mt-6 grid gap-3 text-ui text-ink-soft">
+                {position.summary.map((line) => (
+                  <li key={line} className="grid grid-cols-[1rem_1fr]">
+                    <span aria-hidden="true" className="text-muted">
+                      –
+                    </span>
+                    <span className="max-w-[62ch]">{line}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </li>
       ))}
