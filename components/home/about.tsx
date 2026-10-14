@@ -1,20 +1,9 @@
-import Image from "next/image";
-import portrait from "@/assets/portrait.jpg";
 import { profile, skills } from "@/content/profile";
 
 export function About() {
   return (
     <div className="page-grid gap-y-12">
-      <figure className="col-span-3 max-w-[15rem] sm:col-span-2 sm:max-w-none md:col-span-3">
-        <Image
-          src={portrait}
-          alt={profile.portrait.alt}
-          sizes="(min-width: 1024px) 22vw, (min-width: 768px) 34vw, 50vw"
-          className="h-auto w-full rounded-[3px] border border-line bg-panel"
-        />
-      </figure>
-
-      <div className="col-span-full md:col-span-5 lg:col-span-6">
+      <div className="col-span-full md:col-span-6 lg:col-span-6 lg:col-start-4">
         {profile.about.map((paragraph, index) => (
           <p
             key={index}
