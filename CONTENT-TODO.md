@@ -20,7 +20,8 @@ How the copy was sourced: commit history and code in the project repositories (`
 
 ### Profile and experience
 - [x] Promotion to Frontend Developer: May 2026 (from LinkedIn). Previous role added: Frontend Developer at Nexail Ltd, Dec 2024 – Jul 2025, full-time and remote.
-- [ ] Tenbyte start month: LinkedIn says Jun 2025; the site, CV and first commit say Jul 2025.
+- [ ] Tenbyte start month: LinkedIn says Jun 2025; the site, CV and first commit say Jul 2025. The hero and Experience read it from `tenbyteStart` in `content/profile.ts`; case study periods and prose in `content/projects.ts` (Vidinfra, Tenbyte CDN) are written out separately.
+- [x] Motion (Framer Motion) added to the Interface skills, confirmed by the owner on 2026-10-15. Listed as a skill only; the site still uses no animation library.
 - [x] Earlier experience: Nexail Ltd is included in the timeline based on LinkedIn. The CV lists no earlier roles or education.
 - [x] Nexail responsibilities: built the company website and made it responsive, confirmed by the owner on 2026-10-14. Added to the experience summary.
 - [x] "Open to frontend and product engineering roles" comes from the CV and is now in the Contact section.
@@ -67,7 +68,7 @@ The draft mechanism stays available. `visibility: "draft"` keeps any item out of
 
 ## 5. Optional
 
-- [ ] **Engineering notes.** Two drafts are written in `content/notes.ts`, with pages at `/notes/<slug>`. Review and approve the text before changing visibility to public, and set each date to its publication date. Production hides the section while both notes remain drafts.
+- [x] **Engineering notes.** Both notes in `content/notes.ts` were published on 2026-10-15 at the owner's request, dated 2026-10-15.
 - [ ] Stories that weren't used because the evidence wasn't precise enough:
   - masked storage credentials overwriting real secrets on save (product area unclear);
   - `git-mate`, which is a design spec, not code yet.
