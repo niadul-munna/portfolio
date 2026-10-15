@@ -4,9 +4,9 @@ import type { Note } from "./types";
 export const notes: Note[] = [
   {
     slug: "when-two-numbers-disagree-check-the-time-zone",
-    visibility: "draft",
+    visibility: "public",
     title: "When two numbers disagree, check the time zone",
-    date: "2026-10-14",
+    date: "2026-10-15",
     summary:
       "CDN analytics totals were lower when local date boundaries cut across the backend’s UTC day buckets. I aligned daily requests to UTC and kept display-zone changes out of the query key.",
     standfirst:
@@ -81,9 +81,9 @@ export const notes: Note[] = [
   },
   {
     slug: "one-url-two-responses-caching-nextjs-behind-a-cdn",
-    visibility: "draft",
+    visibility: "public",
     title: "One URL, two responses: caching Next.js behind a CDN",
-    date: "2026-10-14",
+    date: "2026-10-15",
     summary:
       "A CDN served an RSC payload in place of HTML. The response fix had to bypass shared caching, and page invalidation had to cover all six locale paths.",
     standfirst:
