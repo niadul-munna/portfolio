@@ -3,7 +3,7 @@ import { StatusTag } from "@/components/status-tag";
 import type { PracticeEntry } from "@/content/types";
 import { getProject } from "@/lib/site";
 
-export function PracticeList({ entries }: { entries: PracticeEntry[] }) {
+function PracticeEntries({ entries }: { entries: PracticeEntry[] }) {
   return (
     <ul>
       {entries.map((entry) => {
@@ -48,5 +48,24 @@ export function PracticeList({ entries }: { entries: PracticeEntry[] }) {
         );
       })}
     </ul>
+  );
+}
+
+export function PracticeList({ entries }: { entries: PracticeEntry[] }) {
+  const standalone = entries.filter((entry) => !entry.relatedProject);
+  const related = entries.filter((entry) => entry.relatedProject);
+
+  return (
+    <>
+      <PracticeEntries entries={standalone} />
+      {related.length ? (
+        <details className="mt-4 border-t border-line">
+          <summary className="min-h-11 cursor-pointer py-3 text-ui text-ink hover:text-accent">
+            More project stories ({related.length})
+          </summary>
+          <PracticeEntries entries={related} />
+        </details>
+      ) : null}
+    </>
   );
 }
