@@ -1,13 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GeistSans } from "geist/font/sans";
-import { JetBrains_Mono, Newsreader } from "next/font/google";
+import { IBM_Plex_Mono, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { themeScript } from "@/components/theme-toggle";
 import { profile } from "@/content/profile";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
+
+const schibstedGrotesk = Schibsted_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-schibsted-grotesk",
+  display: "swap",
+});
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -17,9 +22,10 @@ const newsreader = Newsreader({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  weight: "400",
+  variable: "--font-ibm-plex-mono",
   display: "swap",
 });
 
@@ -63,7 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${GeistSans.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
+      className={`${schibstedGrotesk.variable} ${newsreader.variable} ${plexMono.variable}`}
       // The theme script below may set data-theme before React hydrates.
       suppressHydrationWarning
     >
