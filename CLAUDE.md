@@ -6,14 +6,14 @@ Personal portfolio for **Niadul Islam** (full name on CV: Niadul Islam Munna), F
 
 Read before changing anything: `PLAN.md` (current handoff), `DESIGN.md` (design system and its reasons), `README.md` (scripts, deploy, testing), `CONTENT-TODO.md` (open facts and decisions).
 
-**Previous session complete, 2026-10-14.** The notes infrastructure, About illustration removal, UI/UX refinements, Nexail summary and X link are implemented. Application changes were committed and pushed through `b5785f3`; Vercel reported deployment success. A targeted responsive and accessibility audit was completed on 2026-10-15; its status and any local uncommitted changes are recorded in `PLAN.md` and `UI-AUDIT.md`. Read `PLAN.md` before the next request; do not rebuild completed features or publish the two draft notes automatically.
+**Previous session complete, 2026-10-14.** The notes infrastructure, About illustration removal, UI/UX refinements, Nexail summary and X link are implemented. Application changes were committed and pushed through `b5785f3`; Vercel reported deployment success. A targeted responsive and accessibility audit was completed on 2026-10-15; its status and any local uncommitted changes are recorded in `PLAN.md` and `UI-AUDIT.md`. Later on 2026-10-15 the owner asked for a review's suggestions to be implemented (hero facts, header CV, work-preview placement, Beyond polish, Motion skill, notes set public); the owner approved committing and pushing them on 2026-10-15 as single-file commits, together with a switch from Geist to Schibsted Grotesk and IBM Plex Mono; see `PLAN.md`. Read `PLAN.md` before the next request; do not rebuild completed features.
 
 ## Stack
 
 - Next.js 16.4 App Router, React 19, TypeScript strict (`noUncheckedIndexedAccess` on), Tailwind CSS v4 (CSS-first, `@theme` in `app/globals.css`), pnpm 11.
 - **Cache Components and Partial Prefetching are deliberately OFF** in `next.config.ts`. Everything is static, and `export const dynamicParams = false` on `app/work/[slug]` gives real 404s. Don't re-enable them without a reason.
-- Fonts: Geist (`geist` package, also the TTFs for OG images), Newsreader and JetBrains Mono via `next/font/google`.
-- Runtime dependencies: `next`, `react`, `react-dom`, `geist`, and `@vercel/speed-insights` (`<SpeedInsights />` in `app/layout.tsx`; Core Web Vitals from real visitors, visible in the Vercel dashboard). Dev dependency: `@playwright/test`. Don't add libraries casually: no icon library (arrows are typographic), no animation library.
+- Fonts: Schibsted Grotesk, Newsreader and IBM Plex Mono via `next/font/google`. OG images read static TTFs (Schibsted Grotesk 400/500, IBM Plex Mono 400) from `assets/fonts/`, with their OFL licences. Satori needs static TTF/OTF, not WOFF2 or variable fonts.
+- Runtime dependencies: `next`, `react`, `react-dom`, and `@vercel/speed-insights` (`<SpeedInsights />` in `app/layout.tsx`; Core Web Vitals from real visitors, visible in the Vercel dashboard). Dev dependency: `@playwright/test`. Don't add libraries casually: no icon library (arrows are typographic), no animation library.
 - The only client component is `components/theme-toggle.tsx`. Everything else is a Server Component. Keep it that way.
 
 ## Commands
@@ -35,7 +35,7 @@ components/             presentation only; components/home/* are the homepage se
 content/                ALL copy and data, typed (types.ts). Edit content here, never in components
 lib/site.ts             visibility filtering, siteUrl, project lookups
 lib/og.tsx              Open Graph frame (Satori)
-assets/                 avatar.jpg (hero photo)
+assets/                 avatar.jpg (hero photo), fonts/ (OG image TTFs + OFL licences)
 public/                 niadul-islam-munna-cv.pdf (replace the file to update the CV; keep the name)
 scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 ```
@@ -44,7 +44,7 @@ scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 
 - **Never invent facts**: no metrics, outcomes, clients, dates, URLs, testimonials or years of experience. Copy came from the repos' commit history. Unconfirmed facts use `pending("...")` from `content/types.ts`, which renders a dashed marker. A test fails if `pending` appears in public content.
 - Every claim carries a `WorkStatus`: `shipped | in-review | in-progress | prototype | concept | personal`. Unmerged work is "in-review", not "shipped".
-- `visibility: "draft"` hides an item from production builds, static params and the sitemap (it shows in `pnpm dev`). Projects and practice entries are public; the two engineering notes are drafts awaiting text approval.
+- `visibility: "draft"` hides an item from production builds, static params and the sitemap (it shows in `pnpm dev`). Projects, practice entries and both engineering notes are public; the notes were published on 2026-10-15 at the owner's request.
 - Tone: a thoughtful engineer in his own voice. Banned clichés are enforced by `tests/content.spec.ts`: passionate, seamless, pixel-perfect, cutting-edge, leverage, and others.
 - Don't publish internal hostnames, endpoints, env values, customer names or vendor contracts. Cloudflare and R2 may be named.
 - Contact: niadulislammunna@gmail.com, github.com/niadul-munna, linkedin.com/in/niadul-munna, x.com/Niadul_Munna. X appears in Contact, the footer and Person `sameAs` data.
@@ -54,7 +54,7 @@ scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 - Swiss editorial: a 12-column grid (`page-grid` utility) with the left "spine" in columns 1–3 and content from column 4. Hairlines, few panels.
 - Tokens live in `app/globals.css`. **The dark tokens appear twice**, under `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` and under `:root[data-theme="dark"]`. Keep the two blocks identical.
 - Muted text is `#666a63`. The brief's `#777b74` failed WCAG AA. Check contrast for any new colour.
-- Type roles: Geist for structure. Newsreader only for long personal text (standfirsts, About, lessons), never headings. JetBrains Mono only for metadata, in sentence case, with no wide tracking.
+- Type roles: Schibsted Grotesk for structure (it replaced Geist, the Next.js default). Newsreader only for long personal text (standfirsts, About, lessons), never headings. IBM Plex Mono only for metadata, in sentence case, with no wide tracking.
 - Motion: 150–250 ms feedback only, and honour `prefers-reduced-motion`. No entrance animations or scroll effects.
 - The signature work index (`components/work-index.tsx` plus `.work-*` CSS) is **pure CSS** (`:hover`, `:focus-within`, `:has()`). The plates are static below 1024px or without a fine pointer.
 - Hero photo: left-aligned at every width, square with 3px corners. Tablet/desktop text gaps are 24/32px. The centered circular mobile preview was explicitly rejected and reverted; do not reintroduce it without a new request.
