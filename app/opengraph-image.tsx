@@ -11,7 +11,7 @@ export default function Image() {
     (
       <OgFrame
         topLeft={
-          <div style={{ color: ogColors.ink, fontFamily: "Geist", fontWeight: 500, fontSize: 28 }}>
+          <div style={{ color: ogColors.ink, fontFamily: "Schibsted Grotesk", fontWeight: 500, fontSize: 28 }}>
             {profile.name}
           </div>
         }
