@@ -37,15 +37,17 @@ Contrast against the canvas, measured with WCAG 2 relative luminance: ink 14.9:1
 
 | Role      | Face           | Size                                | Notes                                     |
 | --------- | -------------- | ----------------------------------- | ----------------------------------------- |
-| Display   | Geist 470      | `clamp(2.25rem, 1.3rem + 3.9vw, 4.5rem)` / 1.04 | Hero statement only. Tracking −0.035em |
-| Title     | Geist 470      | `clamp(1.75rem, 1.25rem + 1.9vw, 2.75rem)` / 1.08 | Work index rows, case study title |
-| Heading   | Geist 500      | 1.375rem / 1.25                     | Case study section headings              |
+| Display   | Schibsted Grotesk 470 | `clamp(2.25rem, 1.3rem + 3.9vw, 4.5rem)` / 1.04 | Hero statement only. Tracking −0.035em |
+| Title     | Schibsted Grotesk 470 | `clamp(1.75rem, 1.25rem + 1.9vw, 2.75rem)` / 1.08 | Work index rows, case study title |
+| Heading   | Schibsted Grotesk 500 | 1.375rem / 1.25                     | Case study section headings              |
 | Standfirst| Newsreader 400 | `clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem)` / 1.45 | Intro paragraphs and the About section |
-| Body      | Geist 400      | 1.0625rem / 1.65                    | Prose, max 66ch                           |
-| UI        | Geist 450      | 0.9375rem / 1.5                     | Navigation, row summaries                 |
-| Meta      | JetBrains Mono 400 | 0.75rem / 1.5                   | Numbers, dates, status, captions. Sentence case, no tracking |
+| Body      | Schibsted Grotesk 400 | 1.0625rem / 1.65                    | Prose, max 66ch                           |
+| UI        | Schibsted Grotesk 450 | 0.9375rem / 1.5                     | Navigation, row summaries                 |
+| Meta      | IBM Plex Mono 400 | 0.75rem / 1.5                   | Numbers, dates, status, captions. Sentence case, no tracking |
 
 Newsreader is used only where a person is speaking at length. It never appears in headings. Mono is for metadata only, never for running text.
+
+Schibsted Grotesk replaced Geist on 2026-10-15. Geist is the `create-next-app` default, so it read as a template; Schibsted Grotesk was drawn for a newspaper group and suits the editorial direction. It is a variable font (400–900), so the 450/470 weights still work. IBM Plex Mono replaced JetBrains Mono to match the engineering-document annotations. Share Tech was considered and rejected: it has one weight, so hierarchy by weight is impossible, and its squared letterforms read as a game interface. Pages load both through `next/font/google`; Open Graph images read static TTF instances from `assets/fonts/`, kept with their OFL licences.
 
 ## Grid and rhythm
 
@@ -60,9 +62,9 @@ Newsreader is used only where a person is speaking at length. It never appears i
 The selected-work list is an index. Each row shows a number, a title, its category, dates and status, and a one-line summary. On desktop with a fine pointer, hovering or focusing a row:
 
 - dims the other titles to muted colour (200 ms), and
-- reveals that project's plate in the right-hand columns, clipping open from top to bottom (240 ms, `cubic-bezier(.2,.7,.2,1)`).
+- reveals that project's plate in the right-hand four columns beside its own row, clipping open from top to bottom (240 ms, `cubic-bezier(.2,.7,.2,1)`). Plates are top-aligned with their row, except the last two rows, which align the plate's bottom with the row so it stays within the list.
 
-The first project's plate is the resting state. The behaviour comes entirely from CSS (`:hover`, `:focus-within`, `:has()`), with no client JavaScript. On touch devices and below 1024px, each plate renders in flow with its row as a static thumbnail. Under `prefers-reduced-motion` the plates swap without transitions.
+The first project's plate is the resting state. The behaviour comes entirely from CSS (`:hover`, `:focus-within`, `:has()`), with no client JavaScript. On touch devices and below 1024px, each plate renders in flow with its row as a static thumbnail. Below 768px the drawing is 70% wide, with the caption at full width, so the index stays short on phones. Under `prefers-reduced-motion` the plates swap without transitions.
 
 ## Plates and schematics
 
@@ -78,7 +80,9 @@ The toggle is the only client component the site ships.
 
 The hero introduces the person, employer and product domains concisely; the work index supplies the technical evidence. Career dates stay in Experience, while About begins with the personal engineering perspective. Header, hero and footer controls have 44px targets without enlarging their typography or icons.
 
-Beyond the interface keeps all six entries. The three independent stories stay visible; the three short summaries already covered by case studies sit in a native disclosure with links to their full explanations. The support and personal-tool stories retain their detail.
+The hero facts lead with "Open to", the roles named in Contact, so availability is visible on the first screen; the intro already states the role. Both hero links point down the page, use sentence case and the ↓ arrow. The header links the CV (PDF, new tab). Phones keep Work, Contact and CV on one row at 375px; Experience and About join from 640px.
+
+Beyond the interface keeps all six entries. The standalone stories stay visible; the short summaries already covered by case studies sit in a native disclosure with links to their full explanations. The disclosure shares the last story's hairline and uses a typographic ↓ that turns to ↑ when open, in place of the browser's triangle. The support and personal-tool stories retain their detail.
 
 Case studies open with native links to What I did, Decisions and Outcome. Their headings accept programmatic focus, so keyboard readers arrive at the same content as pointer readers. No sticky navigation or extra client code is needed. The shared footer keeps contacts and the update date, without a font/framework colophon.
 
@@ -86,9 +90,9 @@ The rendered evidence and before/after decisions for these refinements are recor
 
 ## Notes
 
-Engineering notes use the same left spine as the case studies, with “Note” and an ISO date in mono in columns 1–3. The title uses `text-title`; the opening paragraph uses Newsreader and `text-standfirst`. The body begins in column 4 and spans through column 10, with a maximum measure of 66ch in Geist `text-body`. Section headings use `text-heading`. Below desktop the spine stacks above the writing.
+Engineering notes use the same left spine as the case studies, with “Note” and an ISO date in mono in columns 1–3. The title uses `text-title`; the opening paragraph uses Newsreader and `text-standfirst`. The body begins in column 4 and spans through column 10, with a maximum measure of 66ch in Schibsted Grotesk `text-body`. Section headings use `text-heading`. Below desktop the spine stacks above the writing.
 
-Content is typed in `content/notes.ts` as paragraphs, headings, lists and code blocks. Inline backticks use `RichText`. Code blocks use plain `pre`/`code` in JetBrains Mono, scroll within their own width, and have no syntax-highlighting dependency. A related case study is linked below the body.
+Content is typed in `content/notes.ts` as paragraphs, headings, lists and code blocks. Inline backticks use `RichText`. Code blocks use plain `pre`/`code` in IBM Plex Mono, scroll within their own width, and have no syntax-highlighting dependency. A related case study is linked below the body.
 
 Draft notes carry a visible review label in development or a `SHOW_DRAFTS=1` preview. Normal production builds exclude their pages, homepage links and social images; the sitemap always excludes drafts. Each visible note has article metadata, a shared-frame social image and `BlogPosting` structured data.
 
