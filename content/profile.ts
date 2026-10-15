@@ -32,6 +32,13 @@ const contactChannels: ContactChannel[] = [
   },
 ];
 
+/**
+ * Tenbyte start month, used by the hero and Experience. LinkedIn says Jun
+ * 2025; the CV and first commit say Jul 2025 (see CONTENT-TODO.md). Case study
+ * periods and prose in projects.ts are written out separately.
+ */
+const tenbyteStart = "Jul 2025";
+
 export const profile = {
   name: "Niadul Islam",
   /** Full name as it appears on the CV. */
@@ -41,6 +48,9 @@ export const profile = {
   role: "Frontend Developer",
   employer: "Tenbyte Cloud",
   employerUrl: "https://tenbyte.io",
+  employerSince: tenbyteStart,
+  /** Shown in the hero facts; the same roles as the Contact note. */
+  openTo: "Frontend and product engineering roles",
   location: "Dhaka, Bangladesh",
   timezone: "GMT+6",
   /** Used for <title>, Open Graph and the meta description. */
@@ -76,10 +86,10 @@ export const experience: Position[] = [
   {
     organisation: "Tenbyte Cloud",
     description: "CDN, cloud and video infrastructure",
-    period: "Jul 2025 — present",
+    period: `${tenbyteStart} — present`,
     roles: [
       { title: "Frontend Developer", period: "May 2026 — present" },
-      { title: "Junior Frontend Developer", period: "Jul 2025 — May 2026" },
+      { title: "Junior Frontend Developer", period: `${tenbyteStart} — May 2026` },
     ],
     summary: [
       "Tenbyte Console: built most of the original CDN screens, then the Vidinfra video library, session handling and the move from Next.js to TanStack Start.",
@@ -103,7 +113,7 @@ export const skills: Array<{ area: string; items: string }> = [
   {
     area: "Interface",
     items:
-      "React, Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui, accessible components, forms with React Hook Form and Zod",
+      "React, Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui, Motion (Framer Motion), accessible components, forms with React Hook Form and Zod",
   },
   {
     area: "Data and state",
