@@ -5,8 +5,8 @@ import { Container } from "@/components/container";
 import { profile } from "@/content/profile";
 
 const facts = [
-  { term: "Role", detail: profile.role },
-  { term: "Employer", detail: `${profile.employer}, since Jul 2025` },
+  { term: "Open to", detail: profile.openTo },
+  { term: "Employer", detail: `${profile.employer}, since ${profile.employerSince}` },
   { term: "Based in", detail: `${profile.location} (${profile.timezone})` },
   { term: "Focus", detail: profile.focus },
 ];
@@ -39,10 +39,10 @@ export function Hero() {
               <p className="max-w-[60ch] text-body text-ink-soft">{profile.intro}</p>
               <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-ui sm:gap-x-8">
                 <Link href="#work" className="link inline-flex min-h-11 items-center gap-1 font-medium text-ink">
-                  Selected Work <span aria-hidden="true">↓</span>
+                  Selected work <span aria-hidden="true">↓</span>
                 </Link>
                 <Link href="#contact" className="link inline-flex min-h-11 items-center gap-1 text-ink">
-                  Get in Touch <span aria-hidden="true">→</span>
+                  Get in touch <span aria-hidden="true">↓</span>
                 </Link>
               </p>
             </div>
