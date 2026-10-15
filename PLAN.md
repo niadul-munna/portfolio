@@ -2,6 +2,21 @@
 
 The owner ended this implementation session. There is **no active implementation task**. The previously approved notes infrastructure, About image cleanup, UI/UX audit and follow-up refinements are complete. Do not restart the old Task A/Task B build instructions or publish drafts without a new request.
 
+## Review follow-ups — 2026-10-15 (committed and pushed)
+
+The owner asked for a site review, then for its suggestions to be implemented. The owner approved committing and pushing them on 2026-10-15, one file per commit, without a co-author trailer. Check `git log` for the resulting commits.
+
+- **Hero:** facts lead with "Open to: Frontend and product engineering roles" (`profile.openTo`, the roles already named in Contact) instead of repeating the role. CTAs are sentence case, "Selected work ↓" and "Get in touch ↓".
+- **Start date:** `tenbyteStart` in `content/profile.ts` feeds the hero and Experience. Projects still write their periods and prose out separately. The June/July question stays open.
+- **Header:** CV link (PDF, new tab). Phones show Work, Contact and CV on one row at 375/390px; About and Experience join from 640px. 320px still wraps to two rows, as before.
+- **Work index:** desktop plates sit beside their own row (rows 1–2 top-aligned, last two bottom-aligned), still pure CSS. Below 768px the drawing is 70% wide; the homepage work section went from 2,349px to about 2,035px tall at 390px.
+- **Beyond:** single hairline above the disclosure (`-mt-px`), typographic ↓/↑ marker instead of the browser triangle, and an intro without a hard-coded count: "Services, tools and pipelines, each with its own status. Stories that belong to a case study are grouped below." The owner should confirm this wording.
+- **Skills:** Motion (Framer Motion) added to Interface at the owner's request. No animation library was installed.
+- **Notes:** both set to `visibility: "public"` and dated 2026-10-15 at the owner's request. Published with the 2026-10-15 push.
+- **Fonts:** Schibsted Grotesk replaced Geist and IBM Plex Mono replaced JetBrains Mono (owner-approved after a side-by-side render; Share Tech was rejected). Static TTFs and OFL licences for Open Graph images are in `assets/fonts/`; the `geist` package was removed. A stale Turbopack cache first produced CSS still pointing at Geist; deleting `.next/` and rebuilding fixed it.
+- **Not done:** a clearer hero photo needs an owner-supplied image.
+- **Verification:** `pnpm verify` passed on a clean `.next/` after the font change (lint, typecheck, build, 69 Playwright tests). `pnpm check:content` exit 0. Production screenshots were checked at 320, 375, 390, 640, 768 and 1440px, including desktop hover on every row and the disclosure open and closed.
+
 ## Read this context first
 
 | File | Purpose |
@@ -85,7 +100,7 @@ These artifacts will be absent from a fresh clone. Read the committed text repor
 1. **Review the two notes before publishing:**
    - `when-two-numbers-disagree-check-the-time-zone` (related: `tenbyte-cdn`).
    - `one-url-two-responses-caching-nextjs-behind-a-cdn` (related: `tenbyte-website`).
-   Both remain `visibility: "draft"`, visible in development or a `SHOW_DRAFTS=1` preview, absent from normal production pages/home links/social images and the sitemap. Obtain text approval and set actual publication dates before making them public. Keep factual claims grounded in existing case studies; no unconfirmed performance numbers or company code.
+   Set to `visibility: "public"` and dated 2026-10-15 and published on 2026-10-15 at the owner's request (see the review follow-ups above). Keep factual claims grounded in existing case studies; no unconfirmed performance numbers or company code.
 2. **Confirm existing factual questions:** June versus July 2025 Tenbyte start month (site/CV use July); delivery statuses and role wording; employer comfort with technical detail; Tenbyte/ViteLoop attribution for Sellorio. See `CONTENT-TODO.md`; do not resolve these by inference.
 3. **Optional assets and outreach:** permission-cleared real product screenshots, custom domain, Search Console verification/sitemap submission, linking the portfolio from social profiles and pinning Onubad. These need an owner request, account access or supplied assets.
 4. **Optional later work:** third note about the cross-tab refresh-token race, exact approved recommendations, Vercel Web Analytics, or making the public `CONTENT-TODO.md` private. Do not add dependencies, testimonials, telemetry or remove tracked documentation as an unsolicited follow-up.
