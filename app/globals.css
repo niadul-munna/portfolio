@@ -75,9 +75,9 @@
   --color-accent: var(--accent);
   --color-accent-wash: var(--accent-wash);
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", monospace;
 
   --spacing-gap: var(--gap);
   --ease-out: var(--ease-out);
@@ -214,10 +214,10 @@
 
 /*
  * Every row carries its own plate. Below 1024px, or without a fine pointer,
- * plates sit in flow as static thumbnails. With a fine pointer on a wide
- * screen, plates stack in the right-hand four columns and the hovered or
- * focused row's plate clips open; the first project is the resting state.
- * No JavaScript is involved.
+ * plates sit in flow as static thumbnails, drawn smaller on phones. With a
+ * fine pointer on a wide screen, each plate sits in the right-hand four
+ * columns beside its own row, and the hovered or focused row's plate clips
+ * open; the first project is the resting state. No JavaScript is involved.
  */
 
 .work-title {
@@ -242,6 +242,13 @@
   outline-offset: 6px;
 }
 
+/* Phones: a smaller drawing keeps the index short. The caption keeps its full width. */
+@media (width < 48rem) {
+  .work-plate > :first-child {
+    width: 70%;
+  }
+}
+
 @media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
   .work-index {
     --plate-width: calc((100% - 11 * var(--gap)) / 3 + 3 * var(--gap));
@@ -261,11 +268,16 @@
     grid-column: span 5 / span 5;
   }
 
+  /* Plates are placed against their own row, in the four columns past the list. */
+  .work-row {
+    position: relative;
+  }
+
   .work-plate {
     position: absolute;
     top: 0;
-    right: 0;
-    width: var(--plate-width);
+    left: calc(100% + var(--gap));
+    width: calc(50% - var(--gap) / 2);
     margin: 0;
     opacity: 0;
     clip-path: inset(0 0 100% 0);
@@ -273,6 +285,12 @@
     transition:
       opacity 200ms var(--ease-out),
       clip-path 240ms var(--ease-out);
+  }
+
+  /* The last two rows align their plate's bottom with the row, so it stays within the list. */
+  .work-row:nth-last-child(-n + 2):not(:first-child) .work-plate {
+    top: auto;
+    bottom: 0;
   }
 
   .work-row:is(:hover, :focus-within) .work-plate,
