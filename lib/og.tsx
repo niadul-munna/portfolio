@@ -2,20 +2,21 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { CSSProperties, ReactNode } from "react";
 
-const fontDir = join(process.cwd(), "node_modules/geist/dist/fonts");
+/** Static TTF instances (Satori reads neither WOFF2 nor variable fonts); OFL licences sit beside them. */
+const fontDir = join(process.cwd(), "assets/fonts");
 
 const [regular, medium, mono] = await Promise.all([
-  readFile(join(fontDir, "geist-sans/Geist-Regular.ttf")),
-  readFile(join(fontDir, "geist-sans/Geist-Medium.ttf")),
-  readFile(join(fontDir, "geist-mono/GeistMono-Regular.ttf")),
+  readFile(join(fontDir, "SchibstedGrotesk-Regular.ttf")),
+  readFile(join(fontDir, "SchibstedGrotesk-Medium.ttf")),
+  readFile(join(fontDir, "IBMPlexMono-Regular.ttf")),
 ]);
 
 export const ogSize = { width: 1200, height: 630 };
 
 export const ogFonts = [
-  { name: "Geist", data: regular, weight: 400 as const, style: "normal" as const },
-  { name: "Geist", data: medium, weight: 500 as const, style: "normal" as const },
-  { name: "Geist Mono", data: mono, weight: 400 as const, style: "normal" as const },
+  { name: "Schibsted Grotesk", data: regular, weight: 400 as const, style: "normal" as const },
+  { name: "Schibsted Grotesk", data: medium, weight: 500 as const, style: "normal" as const },
+  { name: "IBM Plex Mono", data: mono, weight: 400 as const, style: "normal" as const },
 ];
 
 export const ogColors = {
@@ -49,7 +50,7 @@ export function OgFrame({
     width: "100%",
     justifyContent: "space-between",
     alignItems: "baseline",
-    fontFamily: "Geist Mono",
+    fontFamily: "IBM Plex Mono",
     fontSize: 22,
     color: ogColors.muted,
   };
@@ -65,7 +66,7 @@ export function OgFrame({
         padding: "64px 72px 56px",
         background: ogColors.canvas,
         color: ogColors.ink,
-        fontFamily: "Geist",
+        fontFamily: "Schibsted Grotesk",
       }}
     >
       <div style={row}>
