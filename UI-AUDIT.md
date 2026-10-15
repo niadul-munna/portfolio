@@ -27,8 +27,8 @@ Target-size interpretation follows [WCAG 2.2's minimum target guidance](https://
 
 | Area | Before | After and reason |
 | --- | --- | --- |
-| Hero headline and introduction | Long headline and a technology-heavy introduction repeated the product domains. | Short headline, followed by identity, role, employer and product domains. Technical evidence stays in Work, Beyond, Experience and Skills. |
-| Hero wrapping and spacing | Six headline lines at 375px; four elsewhere. Mobile CV sat on its own row. Large gap before metadata. | Balanced wrapping: three lines at 375px and two at 768, 1440 and 1920px. All three CTAs fit together at 375px. Smaller CTA and metadata gaps bring Selected work forward. |
+| Hero headline and introduction | Long headline and a technology-heavy introduction repeated the product domains. | Short headline, followed by the owner-approved paragraph about frontend work at Tenbyte Cloud, video infrastructure, CDN platforms and reliable product implementation. Technical evidence stays in Work, Beyond, Experience and Skills. |
+| Hero wrapping and spacing | Six headline lines at 375px; four elsewhere. Mobile CV sat on its own row. Large gap before metadata. | Balanced wrapping: three lines at 375px and two at 768, 1440 and 1920px. The two requested CTAs fit together at 375px and keep their `#work` and `#contact` destinations; CV remains available in Contact and the footer. |
 | Header and theme control | Short text targets and a 32px theme target. | 44px targets for name, navigation and toggle; the existing icon size, theme behaviour and single-row mobile navigation are retained. |
 | Hero and footer links | Small standalone controls, including a narrow footer CV target. | Minimum 44px height and width for the relevant controls, with original destinations and understated typography. |
 | Work index | Status visible only inside the cases. | Existing status appears beside the dates, so Sellorio's ongoing work is clear before opening it. The distinctive CSS previews are retained. |
@@ -62,7 +62,11 @@ No colours, fonts, overall grid, section order, schematic designs, route paths o
 
 > I’m Niadul Islam, a frontend developer at Tenbyte Cloud. I work on video infrastructure, CDN products, and the services that keep them reliable.
 
-The previous headline was technically specific, but its length weakened the opening composition. The shorter reference headline works because the next sentence names the actual domains and employer. “Services” preserves the broader engineering positioning without claiming a new job title or an unverified achievement. React, Next.js, TypeScript, Go, Laravel, Postgres, auth, localisation and deployment detail remains elsewhere on the site. CTA destinations remain `#work`, `#contact` and the existing CV PDF.
+**Current supporting copy** (owner-approved follow-up)
+
+> I'm a frontend developer at Tenbyte Cloud, working on video infrastructure, CDN platforms, and the systems behind them. My focus is on building reliable products, from interface to implementation.
+
+The previous headline was technically specific, but its length weakened the opening composition. The shorter headline is followed by the owner's exact supporting copy, which names the actual domains and employer while retaining broader engineering context. React, Next.js, TypeScript, Go, Laravel, Postgres, auth, localisation and deployment detail remains elsewhere on the site. The two hero CTAs point to `#work` and `#contact`; the CV remains available in Contact and the footer.
 
 ## Rendered comparison
 
@@ -169,3 +173,15 @@ The hero was captured before and after at 375, 768, 1024, 1440 and 1920px in bot
 - Both engineering notes remain drafts. The centered circular photo experiment is reverted. No further UI work or publication is authorized by ending this session.
 - The application working tree was clean before this final documentation update. The owner then authorized six one-file documentation commits and a push; check `git status` and `git log` for the resulting repository state.
 - Screenshots and browser scripts are gitignored local artifacts; a fresh clone will not contain them. The text audit remains available, and browser evidence can be recreated using the available local test tools.
+
+## Targeted refinements — 2026-10-15
+
+The shorter hero remains the stronger option. In production it wraps to three lines at 375px and two lines at 768, 1440 and 1920px; the screen-reader heading identifies Niadul and his role, while the owner's exact supporting copy names Tenbyte Cloud and the video/CDN work. The hero photo is properly optimized through Next Image, with explicit intrinsic dimensions; observed local CLS was 0.
+
+The six Beyond stories previously appeared as one continuous list. Three independent stories (identity, support desk and Onubad) now stay visible; three related summaries are grouped under “More project stories (3)” and link to their complete case studies. Every story and status is retained. The native `<details>` disclosure opens with Enter, works with JavaScript disabled, and has a visible 2px keyboard focus outline. At production viewport widths, the page height fell by 546px at 375px, 456px at 768px and 388px at both 1440px and 1920px. The selected-work section keeps its position and all viewports remain free of horizontal overflow.
+
+The About illustration had already been removed, leaving no illustration to clash with the hero portrait. All four case studies were captured at 375, 768, 1440 and 1920px. Their current schematics have explicit “Schematic, not a product screenshot” captions and numbered legends. No authentic, employer-approved screenshots were available, so project media was left unchanged.
+
+Keyboard checks passed for the disclosure and case-study section navigation; existing work-index, theme and reduced-motion interactions also passed. The production build uses the responsive Next Image optimizer for the hero and produced zero observed layout shifts. Four axe 4.14 scans (375px and 1440px, light and dark) found zero violations. Axe could not automatically resolve contrast for short decorative glyphs and text within SVG schematics; those checks remain incomplete. Main text and disclosure labels use the existing contrast-tested palette.
+
+`pnpm verify` passed lint, route type generation, TypeScript, production build and **55 Playwright tests**. `pnpm check:content` reported no pending public facts; `git diff --check` passed. Production screenshots and measurements are in `.playwright-mcp/current-ui-audit/production-*` and are ignored by Git. They can be recreated from the checked-in app and test setup.
