@@ -169,11 +169,37 @@ test("standalone header, hero and footer controls have comfortable mobile target
 test("practice case study links navigate within the current tab", async ({ page }) => {
   for (const entry of practice.filter((item) => item.visibility === "public" && item.relatedProject)) {
     await page.goto("/");
-    const row = page.locator("#beyond li").filter({ has: page.getByRole("heading", { name: entry.title, exact: true }) });
+    await page.locator("#beyond details summary").click();
+    const row = page.locator("#beyond details li").filter({ has: page.getByRole("heading", { name: entry.title, exact: true }) });
     const link = row.getByRole("link", { name: /case study/ });
     await expect(link).not.toHaveAttribute("target", "_blank");
     await link.click();
     await expect(page).toHaveURL(new RegExp(`/work/${entry.relatedProject}$`));
+  }
+});
+
+test("Beyond the interface features three independent stories and keeps related work accessible", async ({ page }) => {
+  await page.goto("/");
+  const section = page.locator("#beyond");
+  const lists = section.locator("ul");
+  const details = section.locator("details");
+
+  await expect(lists.first().locator("li")).toHaveCount(3);
+  await expect(details.locator("summary")).toHaveText("More project stories (3)");
+
+  for (const entry of practice.filter((item) => item.visibility === "public")) {
+    const heading = section.getByRole("heading", { name: entry.title, exact: true, includeHidden: true });
+    await expect(heading).toHaveCount(1);
+    if (entry.relatedProject) await expect(heading).toBeHidden();
+    else await expect(heading).toBeVisible();
+  }
+
+  await details.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(details).toHaveAttribute("open", "");
+  await expect(details.locator("ul li")).toHaveCount(3);
+  for (const entry of practice.filter((item) => item.visibility === "public" && item.relatedProject)) {
+    await expect(details.getByRole("heading", { name: entry.title, exact: true })).toBeVisible();
   }
 });
 
