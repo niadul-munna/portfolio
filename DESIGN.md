@@ -78,7 +78,7 @@ The toggle is the only client component the site ships.
 
 The hero introduces the person, employer and product domains concisely; the work index supplies the technical evidence. Career dates stay in Experience, while About begins with the personal engineering perspective. Header, hero and footer controls have 44px targets without enlarging their typography or icons.
 
-Beyond the interface keeps all six entries. Work already covered by a case study gets a short summary and an internal link; complete subtitle-service and video-production explanations live in Vidinfra and Sellorio. The support and personal-tool stories retain their detail.
+Beyond the interface keeps all six entries. The three independent stories stay visible; the three short summaries already covered by case studies sit in a native disclosure with links to their full explanations. The support and personal-tool stories retain their detail.
 
 Case studies open with native links to What I did, Decisions and Outcome. Their headings accept programmatic focus, so keyboard readers arrive at the same content as pointer readers. No sticky navigation or extra client code is needed. The shared footer keeps contacts and the update date, without a font/framework colophon.
 
