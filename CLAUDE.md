@@ -6,7 +6,7 @@ Personal portfolio for **Niadul Islam** (full name on CV: Niadul Islam Munna), F
 
 Read before changing anything: `PLAN.md` (current handoff), `DESIGN.md` (design system and its reasons), `README.md` (scripts, deploy, testing), `CONTENT-TODO.md` (open facts and decisions).
 
-**Session complete, 2026-10-14.** The notes infrastructure, About illustration removal, UI/UX refinements, Nexail summary and X link are implemented. Application changes were committed and pushed through `b5785f3`; Vercel reported deployment success. There is no active implementation task. Read `PLAN.md` before the next request; do not rebuild completed features or publish the two draft notes automatically. Audit evidence is in `UI-AUDIT.md`.
+**Previous session complete, 2026-10-14.** The notes infrastructure, About illustration removal, UI/UX refinements, Nexail summary and X link are implemented. Application changes were committed and pushed through `b5785f3`; Vercel reported deployment success. A targeted responsive and accessibility audit was completed on 2026-10-15; its status and any local uncommitted changes are recorded in `PLAN.md` and `UI-AUDIT.md`. Read `PLAN.md` before the next request; do not rebuild completed features or publish the two draft notes automatically.
 
 ## Stack
 
