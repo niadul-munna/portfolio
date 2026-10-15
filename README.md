@@ -93,6 +93,7 @@ Before deploying, run `pnpm check:content`. It should print nothing pending.
 - Person JSON-LD on the home page;
 - note visibility, article metadata, BlogPosting JSON-LD and generated social images (including drafts when testing a `SHOW_DRAFTS=1` build);
 - the work index: hover and keyboard focus reveal the right plate on desktop, plates are static on mobile, and transitions are removed under reduced motion;
+- Beyond the interface: three independent stories stay visible, related case-study summaries remain available in a native disclosure, and the disclosure opens with the keyboard;
 - the skip link;
 - keyboard section jumps on every case study, same-tab practice links, and 44px mobile targets in the header, hero and footer;
 - the theme toggle: switching, persistence across reloads, clearing back to the system theme, and sync between open tabs;
