@@ -109,14 +109,14 @@ app/
   page.tsx                home page and Person JSON-LD
   work/[slug]/page.tsx    case studies (static, unknown slugs 404)
   notes/[slug]/page.tsx   engineering notes (static, drafts excluded by default)
-  opengraph-image.tsx     Open Graph images, set in Geist
+  opengraph-image.tsx     Open Graph images, set in Schibsted Grotesk and IBM Plex Mono
   sitemap.ts, robots.ts, icon.svg, not-found.tsx
   globals.css             tokens, type scale, base styles, work-index CSS
 components/               presentation only
 content/                  all copy and data
 lib/site.ts               visibility, site URL, project lookups
 lib/og.tsx                shared Open Graph frame and fonts
-assets/                   hero photo imported by the component
+assets/                   hero photo imported by the component; fonts/ holds OG image TTFs
 scripts/check-content.mjs pending and draft report
 tests/                    Playwright tests
 ```
@@ -124,4 +124,4 @@ tests/                    Playwright tests
 ## Notes on choices
 
 - **Cache Components are off.** Next 16 enables them in new apps. All content here is known at build time, and classic static generation with `dynamicParams = false` returns a real 404 for unknown slugs, which Cache Components does not support.
-- **Dependencies:** `next`, `react`, `react-dom`, `geist` (the font, plus TTFs for Open Graph images), and `@vercel/speed-insights` (real-visitor Core Web Vitals on Vercel; enable it under Project → Speed Insights). Newsreader and JetBrains Mono come through `next/font/google` and are self-hosted at build time. There is no icon library; the arrows are typographic.
+- **Dependencies:** `next`, `react`, `react-dom` and `@vercel/speed-insights` (real-visitor Core Web Vitals on Vercel; enable it under Project → Speed Insights). Schibsted Grotesk, Newsreader and IBM Plex Mono come through `next/font/google` and are self-hosted at build time. Open Graph images use static TTFs in `assets/fonts/` (OFL), because Satori can't read WOFF2 or variable fonts. There is no icon library; the arrows are typographic.
