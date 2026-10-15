@@ -39,15 +39,11 @@ export function Hero() {
               <p className="max-w-[60ch] text-body text-ink-soft">{profile.intro}</p>
               <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-ui sm:gap-x-8">
                 <Link href="#work" className="link inline-flex min-h-11 items-center gap-1 font-medium text-ink">
-                  See selected work <span aria-hidden="true">↓</span>
+                  Selected Work <span aria-hidden="true">↓</span>
                 </Link>
                 <Link href="#contact" className="link inline-flex min-h-11 items-center gap-1 text-ink">
-                  Get in touch <span aria-hidden="true">→</span>
+                  Get in Touch <span aria-hidden="true">→</span>
                 </Link>
-                <a href={profile.cv} className="link inline-flex min-h-11 min-w-11 items-center gap-1 text-ink" type="application/pdf" target="_blank" rel="noopener">
-                  CV <span className="font-mono text-meta text-muted">PDF</span>
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
               </p>
             </div>
           </div>
