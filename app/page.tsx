@@ -61,7 +61,7 @@ export default function HomePage() {
         id="beyond"
         number={sectionNumber("beyond")}
         title="Beyond the interface"
-        intro="The interface is most of my job, not all of it. Recent work on the other side of the API, with an honest status for each."
+        intro="Three independent stories from beyond the interface, with related product work below."
       >
         <PracticeList entries={visiblePractice} />
       </Section>
