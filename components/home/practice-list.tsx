@@ -58,10 +58,14 @@ export function PracticeList({ entries }: { entries: PracticeEntry[] }) {
   return (
     <>
       <PracticeEntries entries={standalone} />
+      {/* -mt-px lays the disclosure's top hairline over the last story's bottom one. */}
       {related.length ? (
-        <details className="mt-4 border-t border-line">
-          <summary className="min-h-11 cursor-pointer py-3 text-ui text-ink hover:text-accent">
+        <details className="group -mt-px border-t border-line">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center gap-1 py-3 text-ui text-ink hover:text-accent [&::-webkit-details-marker]:hidden">
             More project stories ({related.length})
+            <span aria-hidden="true" className="inline-block transition-transform duration-200 group-open:rotate-180">
+              ↓
+            </span>
           </summary>
           <PracticeEntries entries={related} />
         </details>
