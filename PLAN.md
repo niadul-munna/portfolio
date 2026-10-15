@@ -19,10 +19,11 @@ The owner ended this implementation session. There is **no active implementation
 - **Engineering notes infrastructure:** typed body blocks, `/notes/[slug]`, article metadata, `BlogPosting` JSON-LD, related case links, social images and draft-aware homepage/sitemap visibility. Two complete posts are still drafts.
 - **About image cleanup:** removed `assets/portrait.jpg` and its rendering. The real `assets/avatar.jpg` hero photo remains. About now contains personal paragraphs and skills; career dates stay in Experience.
 - **Profile and experience:** Dhaka, Bangladesh; Frontend Developer promotion in May 2026; Nexail Ltd, Dec 2024–Jul 2025, full-time remote. Nexail has owner-confirmed bullets about building the company website and implementing responsive layouts.
-- **Hero:** “I build interfaces that work beyond the screen.” Supporting copy names Niadul, the frontend role, Tenbyte Cloud, video infrastructure, CDN products and related services. CTA destinations are unchanged.
+- **Hero:** “I build interfaces that work beyond the screen.” The approved supporting paragraph names the frontend role, Tenbyte Cloud, video infrastructure, CDN platforms and reliable product implementation. Selected Work and Get in Touch retain their `#work` and `#contact` destinations; the CV remains in Contact and the footer.
 - **Hero spacing:** photo-to-text gap is 24px on tablet and 32px on desktop, with a 640px maximum text/CTA width. Image sizes are 112/160/192px on mobile/tablet/desktop.
 - **Accepted photo treatment:** left-aligned at every width, square with 3px corners. The owner tried a centered circular mobile photo, rejected it and requested a revert. That experiment is fully reverted; retain the tighter desktop gap.
 - **Homepage hierarchy:** all six Beyond the interface entries remain. Three summaries link to their cases; complete subtitle-service and Remotion explanations moved to Vidinfra and Sellorio without changing statuses. Work rows show project status. Repeated About career prose and the font/framework footer colophon were removed.
+- **Beyond the interface grouping (2026-10-15):** three independent stories remain visible; the three related project summaries are available in a native disclosure with links to their full case studies. No story or status was removed.
 - **Usability:** 44px standalone header/hero/footer targets; native case links to What I did, Decisions and Outcome, with focus transfer to headings. Existing CSS previews, reduced motion and theme behaviour remain.
 - **X profile:** `https://x.com/Niadul_Munna`, supplied by the owner, appears in Contact, the footer and Person `sameAs` data.
 - No dependencies, new client components, route replacements, invented metrics or fake product screenshots were added. Keep the existing editorial design.
@@ -68,6 +69,16 @@ Local, gitignored artifacts:
 - `.playwright-mcp/x-profile/`: X contact/footer captures.
 
 These artifacts will be absent from a fresh clone. Read the committed text reports and recreate screenshots with available browser tools when needed; their absence does not mean the prior tests were never run.
+
+## Latest targeted audit — 2026-10-15
+
+- The shorter hero headline remains the stronger fit: three lines at 375px and two at 768, 1440 and 1920px. The screen-reader heading identifies Niadul and his role; the owner-approved supporting paragraph supplies employer and product context. A later copy refinement retains the headline and uses two hero CTAs.
+- The three standalone Beyond stories remain visible; related summaries are in a native disclosure. All six are retained, and all three linked project summaries open by keyboard. The About illustration was already removed, so no portrait change was needed.
+- All four case studies were visually checked at 375, 768, 1440 and 1920px. Existing schematics and explicit labels remain; no authentic, approved product screenshots were available.
+- Production checks across five routes and four widths returned HTTP 200, no page errors or horizontal overflow. Local layout-shift observations were 0. The optimized hero image loaded with intrinsic dimensions and responsive `/_next/image` sources. Reduced-motion plate duration is effectively zero.
+- Four axe 4.14 scans (375/1440px, light/dark) reported zero violations. Axe left color-contrast checks incomplete for short glyphs and SVG schematic text; the normal text uses the existing contrast-checked design tokens.
+- `pnpm verify`: lint, type generation, TypeScript, production build and **55 Playwright tests passed**. `pnpm check:content` found no pending public facts; `git diff --check` passed.
+- Current screenshots and measurements are gitignored under `.playwright-mcp/current-ui-audit/`; they are local evidence, not tracked assets. The latest task changes remain local and uncommitted unless the owner separately authorizes a commit.
 
 ## Remaining owner decisions — no automatic next task
 
