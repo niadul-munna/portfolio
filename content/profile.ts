@@ -52,7 +52,7 @@ export const profile = {
     "I build interfaces that work beyond the screen.",
 
   intro:
-    "I’m Niadul Islam, a frontend developer at Tenbyte Cloud. I work on video infrastructure, CDN products, and the services that keep them reliable.",
+    "I'm a frontend developer at Tenbyte Cloud, working on video infrastructure, CDN platforms, and the systems behind them. My focus is on building reliable products, from interface to implementation.",
 
   focus: "React, Next.js, TypeScript; growing toward full-stack",
 
