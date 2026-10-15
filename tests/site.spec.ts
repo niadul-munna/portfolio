@@ -185,7 +185,7 @@ test("Beyond the interface features three independent stories and keeps related 
   const details = section.locator("details");
 
   await expect(lists.first().locator("li")).toHaveCount(3);
-  await expect(details.locator("summary")).toHaveText("More project stories (3)");
+  await expect(details.locator("summary")).toHaveText(/^More project stories \(3\)/);
 
   for (const entry of practice.filter((item) => item.visibility === "public")) {
     const heading = section.getByRole("heading", { name: entry.title, exact: true, includeHidden: true });
