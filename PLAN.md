@@ -2,6 +2,16 @@
 
 The owner ended this implementation session. There is **no active implementation task**. The previously approved notes infrastructure, About image cleanup, UI/UX audit and follow-up refinements are complete. Do not restart the old Task A/Task B build instructions or publish drafts without a new request.
 
+## GitMate added — 2026-10-26 (local, not committed)
+
+The owner asked for GitMate (github.com/niadul-munna/gitmate, a public repo) to be added as a project and approved the plan in chat.
+
+- **Project:** fifth Selected Work entry and case study at `/work/gitmate`, status Personal, Oct 2026 — present, sole developer. Copy comes from the GitMate repository at `d78e03f` (README, `docs/architecture.md`, `docs/git-behavior.md`, `SECURITY.md`, commits). The owner confirmed the motivation: committing for Tenbyte and personally from one laptop, with commits going out under the wrong email. Not added to Experience, which lists jobs only.
+- **Media:** the first real screenshots on the site: `public/work/gitmate/` holds Overview, Diagnostics and the change preview, copied from the repo's `docs/screenshots`. Captions say they show the real app against a demo home directory. `DESIGN.md` records the exception to schematics.
+- **Elsewhere:** About names GitMate as the latest personal tool; Rust and Tauri joined "Beyond the browser" in skills; `CONTENT-TODO.md` replaces the old "git-mate is a design spec" note and adds GitMate review items; the content test now allows three to five public projects.
+- **Verification:** `pnpm verify` passed (lint, typecheck, build, 76 Playwright tests); `pnpm check:content` exit 0; `git diff --check` passed. Screenshots at 390 and 1440px, light and dark, showed the GitMate plate bottom-aligned on hover and no new spacing; the work section is one row taller than production.
+- **Advisory:** the build printed a Next.js security notice that 16.4.0 has a known vulnerability and suggested `next upgrade --agent=security`. Not acted on; the owner decides.
+
 ## Review follow-ups — 2026-10-15 (committed and pushed)
 
 The owner asked for a site review, then for its suggestions to be implemented. The owner approved committing and pushing them on 2026-10-15, one file per commit, without a co-author trailer. Check `git log` for the resulting commits.
