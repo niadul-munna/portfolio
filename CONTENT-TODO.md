@@ -60,9 +60,15 @@ How the copy was sourced: commit history and code in the project repositories (`
 
 The draft mechanism stays available. `visibility: "draft"` keeps any item out of production builds, static params and the sitemap.
 
+### GitMate (`/work/gitmate`)
+
+- [x] Added on 2026-10-26 at the owner's request, as the fifth Selected Work project. Copy comes from the `gitmate` repository (README, `docs/`, `SECURITY.md`, commit history) as of `d78e03f`. The motivation (committing for Tenbyte and personally from one laptop, with commits going out under the wrong email) was confirmed by the owner. Kept out of Experience, which lists jobs only.
+- [ ] Read the standfirst, decisions and lessons aloud. They were drafted from the repository, not from interviews with you.
+- [ ] Update the outcomes when there is a release with downloads, or when the desktop app is tested outside Linux.
+
 ## 4. Assets
 
-- [ ] **Screenshots.** None are used. Every project shows a labelled schematic instead. If screenshots are cleared, put them in `public/work/<slug>/` and add them to the project's `media` as `{ kind: "image", src, alt, width, height, caption }`. They render with `next/image`. Crop out customer data, internal hostnames and account details.
+- [ ] **Screenshots.** GitMate uses real screenshots of its own desktop app, run against a demo home directory. Every employer project shows a labelled schematic instead. If screenshots are cleared, put them in `public/work/<slug>/` and add them to the project's `media` as `{ kind: "image", src, alt, width, height, caption }`. They render with `next/image`. Crop out customer data, internal hostnames and account details.
 - [x] **Image style.** Keep the real hero photo. The About illustration was removed on 2026-10-14; About now uses paragraphs and skills only.
 - [x] **Photo.** Your GitHub avatar is in the hero (`assets/avatar.jpg`), added on 2026-10-14.
 
@@ -70,5 +76,5 @@ The draft mechanism stays available. `visibility: "draft"` keeps any item out of
 
 - [x] **Engineering notes.** Both notes in `content/notes.ts` were published on 2026-10-15 at the owner's request, dated 2026-10-15.
 - [ ] Stories that weren't used because the evidence wasn't precise enough:
-  - masked storage credentials overwriting real secrets on save (product area unclear);
-  - `git-mate`, which is a design spec, not code yet.
+  - masked storage credentials overwriting real secrets on save (product area unclear).
+- [x] `git-mate` was listed here as a design spec on 2026-10-15. It became GitMate v0.1.0 and has its own case study since 2026-10-26.
