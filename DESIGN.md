@@ -68,7 +68,9 @@ The first project's plate is the resting state. The behaviour comes entirely fro
 
 ## Plates and schematics
 
-There are no cleared product screenshots yet, and the brief rules out mock dashboards posing as real ones. Each project therefore gets a **schematic**: a hairline line drawing of the shape of the work (a library grid, a UTC-bucketed chart, a cache path), annotated in mono like an engineering figure. Each is labelled as a schematic in its caption. When a screenshot is cleared, add it to the project's `media` and the plate renders it with `next/image`.
+There are no cleared product screenshots of employer work yet, and the brief rules out mock dashboards posing as real ones. Each employer project therefore gets a **schematic**: a hairline line drawing of the shape of the work (a library grid, a UTC-bucketed chart, a cache path), annotated in mono like an engineering figure. Each is labelled as a schematic in its caption. When a screenshot is cleared, add it to the project's `media` and the plate renders it with `next/image`.
+
+GitMate is the owner's own open-source project, so it uses real screenshots from its repository (`docs/screenshots`, copied to `public/work/gitmate/`). They show the real desktop app run against a demo home directory, and the captions say so. They are light-theme captures in both site themes.
 
 ## Theme
 
