@@ -75,7 +75,8 @@ scripts/check-content.mjs, tests/ (site.spec.ts, content.spec.ts)
 - **Never commit or push without explicit approval of that specific commit or push.** Approving a commit is not approving a push.
 - **Never add a `Co-Authored-By` trailer.**
 - When commits are authorized, the owner prefers **one file per commit**, including additions and deletions. Use meaningful messages. Approval for a completed batch does not authorize future commits or pushes.
-- Pushing over HTTPS: git has no credential helper configured. Use `git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push`, and don't change the global git config.
+- Pushing over HTTPS: on 2026-10-26 the owner ran `gh auth setup-git`, so the global git config uses `gh` as the GitHub credential helper and a plain `git push` works. Don't change the global git config yourself.
+- Pushing `main` deploys to production, and Claude Code's auto mode may block it. If it does, ask the owner to run `! git push origin main`.
 
 ## Language
 
