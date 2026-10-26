@@ -466,4 +466,149 @@ export const projects: Project[] = [
       ],
     },
   },
+
+  {
+    slug: "gitmate",
+    visibility: "public",
+    title: "GitMate",
+    category: "Developer tool",
+    summary:
+      "An open-source Git identity manager: one Rust core behind a CLI and a desktop app, showing who your next commit will be from and why.",
+    standfirst:
+      "I commit for Tenbyte and for myself from the same laptop, and commits kept going out under the wrong email. In October 2026 I started GitMate to stop that. It shows which name and email the next commit will carry and why, and it changes Git configuration only after showing you the exact edit.",
+    period: "Oct 2026 — present",
+    role: "Sole developer",
+    context: "Personal open-source project, released under the MIT licence.",
+    status: "personal",
+    stack: [
+      "Rust",
+      "clap",
+      "Tauri 2",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vite",
+      "Vitest and Testing Library",
+      "GitHub Actions",
+    ],
+    links: [{ label: "github.com/niadul-munna/gitmate", href: "https://github.com/niadul-munna/gitmate" }],
+    media: [
+      {
+        kind: "image",
+        src: "/work/gitmate/overview.png",
+        alt: "GitMate’s Overview screen for ~/work/api: commits are authored as Ada Lovelace <ada@acme.example>, set by the work profile through the folder rule for ~/work, with every value Git found listed in read order.",
+        width: 1120,
+        height: 661,
+        caption:
+          "Overview, from the real desktop app run against a demo home directory. It names the identity the next commit will carry and lists every value Git found, in the order Git reads them.",
+      },
+      {
+        kind: "image",
+        src: "/work/gitmate/diagnostics.png",
+        alt: "GitMate’s Diagnostics screen: a repository under ~/work would be authored with a personal email, because its own .git/config overrides the folder rule, with a one-click fix to assign the work profile.",
+        width: 1120,
+        height: 661,
+        caption:
+          "Diagnostics: a repository’s own `.git/config` overrides the folder rule, so its commits would go out under a personal email. The fix is one click away.",
+      },
+      {
+        kind: "image",
+        src: "/work/gitmate/plan-preview.png",
+        alt: "The change preview for that fix: user.name and user.email in ~/work/billing/.git/config, with current and proposed values, and Cancel and Apply changes buttons.",
+        width: 1120,
+        height: 661,
+        caption:
+          "The preview that fix opens: the exact file, each setting, its current value and the proposed one. Nothing is written until it’s applied, and History can undo it.",
+      },
+    ],
+    caseStudy: {
+      background: [
+        "Git puts whatever `user.name` and `user.email` resolve to into every commit. With work, personal and open-source repositories on one machine, the value in effect can come from the global config, a repository’s own `.git/config`, a conditional include or an environment variable.",
+        "GitMate is a command-line tool and a desktop app built on the same Rust core. It has no account, no cloud service, and makes no network connections except when you ask it to clone.",
+      ],
+      problem: [
+        "A wrong email isn’t an error. Git commits under whatever identity it finds, and you find out later, in the history.",
+        "The usual fix, an `includeIf` rule per folder in the global config, is easy to get subtly wrong. A rule written on a symlinked path doesn’t match the real one, the last matching rule wins, and a repository’s own config overrides all of it.",
+        "The commit identity also isn’t the login. Changing `user.email` changes what a commit says, not which GitHub account the push authenticates as. That’s decided by the SSH key or the credential helper.",
+      ],
+      constraints: [
+        "It edits people’s real Git configuration. Comments, formatting and unrelated settings have to survive every change.",
+        "Git’s precedence rules have edge cases, so GitMate can’t guess the answer. It has to ask Git.",
+        "No secrets: it never reads tokens, credential-helper data or the contents of private keys.",
+        "Two front ends, a CLI and a desktop app, that must never behave differently.",
+        "Linux first, with the core and CLI tests also passing on macOS and Windows.",
+      ],
+      contributions: [
+        {
+          title: "Who the next commit is from, and why",
+          body: "`gitmate whoami` and the Overview screen show the name and email Git will use right now, the profile they match, and every value Git found in the order it reads them, with the one in effect marked.",
+          status: "personal",
+        },
+        {
+          title: "Profiles per repository or per folder",
+          body: "A profile is a name, an email and optionally an SSH key and a signing key. `gitmate use` assigns one to a repository. `gitmate rules add` writes an `includeIf` rule for a whole folder, on the folder’s real path so a symlink can’t make it miss.",
+          status: "personal",
+        },
+        {
+          title: "Preview, apply, undo",
+          body: "Every change is first computed as a plan: the exact file, each key, its current and proposed values, and any conflicts. Applying re-reads every key under a lock, and again just before the first write. If anything changed since the preview, nothing is written. Each change is journaled and backed up, a failed write reverts itself, and undo restores only GitMate’s own keys.",
+          status: "personal",
+        },
+        {
+          title: "Catching the wrong identity early",
+          body: "`gitmate doctor` explains mismatches, such as a repository under `~/work` authored with a personal email, and exits with status 1 so scripts can use it. Remote patterns flag a work remote with personal commits. An optional pre-commit hook refuses commits by the wrong identity, and `gitmate clone` assigns the right profile straight after cloning.",
+          status: "personal",
+        },
+        {
+          title: "A desktop app with a narrow surface",
+          body: "The Tauri app has Overview, Repository, Diagnostics, Profiles, Rules, History and Settings screens, and its fixes open the same change preview. The webview is treated as untrusted. It can call 17 GitMate commands and the native file picker, behind a strict Content Security Policy, and it can only approve a plan the Rust side computed and still holds.",
+          status: "personal",
+        },
+        {
+          title: "Tests against real Git",
+          body: "Core behaviour is tested against real temporary Git repositories, not mocks, in a sandboxed home directory whose path contains a space and non-ASCII characters. CI runs the core and CLI tests on Linux, macOS and Windows, and fails if a test wrote to the runner’s real Git config. The UI tests mock only the boundary to the Rust side.",
+          status: "personal",
+        },
+      ],
+      decisions: [
+        {
+          decision: "Ask Git instead of parsing its config",
+          why: "Git reads two global files, processes an include at its position in the file, and lets environment variables override the config. `git config --show-origin` and `git var` give the answer Git itself will use.",
+          tradeoff:
+            "Every read runs Git, and GitMate can only report what Git’s output says. It needs Git 2.31 or later.",
+        },
+        {
+          decision: "Undo keys, not files",
+          why: "Copying a backup over a config file would also throw away every edit made since. Undo restores only the keys GitMate wrote, and only if they still hold GitMate’s values.",
+          tradeoff:
+            "Undo refuses when someone changed a key since, or when a later operation touched the same key. Some changes have to be undone in order, or fixed by hand from the backups.",
+        },
+        {
+          decision: "One core behind both front ends",
+          why: "The CLI and the desktop app call the same facade in the core, so they can’t drift apart in behaviour.",
+          tradeoff:
+            "The React UI’s types mirror the Rust output by hand and have to be kept in step with it.",
+        },
+      ],
+      outcomes: [
+        {
+          text: "Version 0.1.0 is public on GitHub under the MIT licence. There are no prebuilt downloads yet; it builds from source.",
+          status: "personal",
+        },
+        {
+          text: "Verified by hand on Pop!_OS 24.04 with Git 2.43. The core and CLI tests also pass in CI on macOS and Windows; the desktop app is built and tested on Linux only.",
+          status: "personal",
+        },
+        {
+          text: "The known gaps are written down. The desktop app doesn’t yet edit signing settings, remote patterns or the hook, and the hook does nothing for Git clients that can’t find `gitmate` on their path.",
+          status: "personal",
+        },
+      ],
+      lessons: [
+        "The name on a commit and the account that pushes it are decided in different places. A tool that changes one shouldn’t suggest it changed the other.",
+        "If a tool edits someone’s config, the preview has to be exactly what gets written. Re-checking every key just before the write is what makes that true.",
+        "Portability bugs hid in paths. Windows’ extended-length prefix contains `?` and `\\`, so GitMate’s own glob check rejected every canonicalised folder, and macOS reaches its temp directory through a symlink.",
+      ],
+    },
+  },
 ];
