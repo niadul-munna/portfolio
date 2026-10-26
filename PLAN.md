@@ -63,7 +63,7 @@ The owner asked for a site review, then for its suggestions to be implemented. T
 - Vercel reported **Deployment has completed** for that tip. Live homepage: `https://niadul.vercel.app/`; a read-only check returned HTTP 200 and found the two rendered X links.
 - The application working tree was clean before the owner requested this final documentation update. The owner then authorized six one-file documentation commits and a push. Inspect `git status` and `git log`; do not assume local changes are already remote.
 - Owner preference persists: **one file per commit**, including additions/deletions; meaningful messages; no `Co-Authored-By` trailer. Commit and push each require explicit authorization for the new work. Earlier approvals applied to the completed batches.
-- Authorized pushes use `git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin main`. Do not alter global Git configuration or force-push.
+- Authorized pushes use a plain `git push origin main`: on 2026-10-26 the owner ran `gh auth setup-git`, which made `gh` the GitHub credential helper. Do not alter global Git configuration or force-push. Claude Code's auto mode may block a push to `main` as a production deploy; the owner then runs `! git push origin main`.
 
 ## Verification actually completed
 
