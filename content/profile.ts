@@ -72,7 +72,7 @@ export const profile = {
 
   about: [
     "The work I like best is in the middle, where an interface meets a system that doesn’t behave quite the way the screen assumes. A date picker and a backend that disagree about midnight. Several tabs and one refresh token. A cache that can’t tell an HTML page from a server component payload. Fixing those means reading both sides, which is how I ended up spending more of my time on the other one.",
-    "Outside work I build small tools I need myself. The latest is Onubad, a panel app on my Linux desktop that translates between English and Bangla. Next, I want to own product features end to end, from the data model to the last focus ring.",
+    "Outside work I build tools I need myself. Onubad is a panel app on my Linux desktop that translates between English and Bangla. The latest is GitMate, which makes sure my work and personal commits go out under the right email. Next, I want to own product features end to end, from the data model to the last focus ring.",
   ],
 
   contact: {
@@ -128,6 +128,6 @@ export const skills: Array<{ area: string; items: string }> = [
   {
     area: "Beyond the browser",
     items:
-      "Node.js, Go, Laravel, PostgreSQL, MongoDB, Payload CMS, Linux, PM2, Nginx, Cloudflare, object storage",
+      "Node.js, Go, Rust, Tauri, Laravel, PostgreSQL, MongoDB, Payload CMS, Linux, PM2, Nginx, Cloudflare, object storage",
   },
 ];
