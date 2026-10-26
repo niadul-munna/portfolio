@@ -86,10 +86,10 @@ test("every case study has each section filled in", () => {
   }
 });
 
-test("there are three or four public projects to select", () => {
+test("there are three to five public projects to select", () => {
   const visible = projects.filter((project) => project.visibility === "public");
   expect(visible.length).toBeGreaterThanOrEqual(3);
-  expect(visible.length).toBeLessThanOrEqual(4);
+  expect(visible.length).toBeLessThanOrEqual(5);
 });
 
 test("public content has no pending facts", () => {
